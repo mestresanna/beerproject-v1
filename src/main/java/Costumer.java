@@ -1,15 +1,15 @@
 public class Costumer {
-    private String name;
+    private String contact;
     private String CompanyName;
     private String address;
     private String email;
     private String phone;
 
-    private int id;
+    private int idCostumer;
 
 
-    public String getName() {
-        return name;
+    public String getContact() {
+        return contact;
     }
 
     public String getCompanyName() {
@@ -28,8 +28,8 @@ public class Costumer {
         return phone;
     }
 
-    public int getId() {
-        return id;
+    public int getIdCostumer() {
+        return idCostumer;
     }
 
 

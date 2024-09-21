@@ -1,14 +1,15 @@
 import java.time.LocalDate;
 
 public class Order {
-    private int id;
+    private int idOrder;
     private int customerId;
     private int productId;
     private int quantity;
     private LocalDate date;
+    private String comments;
 
-    public int getId() {
-        return id;
+    public int getIdOrder() {
+        return idOrder;
     }
 
     public int getCustomerId() {
@@ -25,5 +26,9 @@ public class Order {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    public String getComments() {
+        return comments;
     }
 }

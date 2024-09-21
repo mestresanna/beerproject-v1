@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass = "be.kdg.programming3.StartApplication"
+    mainClass = "StartApplication"
 }
 
 group = "be.kdg.programming3"
