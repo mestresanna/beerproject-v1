@@ -32,5 +32,15 @@ public class Costumer {
         return idCostumer;
     }
 
-
+    @Override
+    public String toString() {
+        return "Costumer{" +
+                "contact='" + contact + '\'' +
+                ", CompanyName='" + CompanyName + '\'' +
+                ", address='" + address + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", idCostumer=" + idCostumer +
+                '}';
+    }
 }
