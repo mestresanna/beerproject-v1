@@ -1,6 +1,6 @@
-import java.rmi.MarshalledObject;
+package Domain;
+
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,8 +10,11 @@ public class Order {
     private int quantity;
     private LocalDate date;
     private String comments;
+
     private Costumer costumer;
-    private Map beers = new HashMap();
+    private Map<Beer, Integer> beers = new HashMap(); //inicialitzar amb control de que no sigui null en un method
+
+    //set id perque la database ho introdueixi directament
 
     public int getIdOrder() {
         return idOrder;
@@ -40,7 +43,7 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "Domain.Order{" +
                 "idOrder=" + idOrder +
                 ", customerId=" + customerId +
                 ", date=" + date +

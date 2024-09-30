@@ -1,3 +1,5 @@
+package be.kdg.programming3.prog3_spring.Domain;
+
 public class Costumer {
     private String contact;
     private String CompanyName;
@@ -7,6 +9,17 @@ public class Costumer {
 
     private int idCostumer;
 
+    public Costumer(String contact, String companyName, String address, String email, String phone, int idCostumer) {
+        this.contact = contact;
+        CompanyName = companyName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.idCostumer = idCostumer;
+    }
+    public void setIdCostumer(int idCostumer) {
+        this.idCostumer = idCostumer;
+    }
 
     public String getContact() {
         return contact;
@@ -34,7 +47,7 @@ public class Costumer {
 
     @Override
     public String toString() {
-        return "Costumer{" +
+        return "Domain.Costumer{" +
                 "contact='" + contact + '\'' +
                 ", CompanyName='" + CompanyName + '\'' +
                 ", address='" + address + '\'' +

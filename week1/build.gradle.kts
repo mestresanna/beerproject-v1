@@ -22,3 +22,8 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
 }
+
+// add this line to be sure that it works the Scanner gradle
+tasks.getByName("run", JavaExec::class) {
+    standardInput = System.`in`
+}
