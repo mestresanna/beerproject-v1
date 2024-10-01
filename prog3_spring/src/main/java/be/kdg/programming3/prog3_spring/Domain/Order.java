@@ -17,7 +17,7 @@ public class Order {
         this.comments = comments;
         this.costumer = costumer;
         this.beers = beers;
-        setOrderToBeer();
+        setStockToBeer();
     }
 
     public void setIdOrder(int idOrder) {
@@ -36,7 +36,7 @@ public class Order {
         return comments;
     }
 
-    public void setOrderToBeer(){
+    public void setStockToBeer(){
        if (beers!=null && beers.size()>0) {
            for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                Beer key = entry.getKey();
@@ -45,6 +45,15 @@ public class Order {
            }
        }
        //call an error when beers is empty
+    }
+
+
+    public HashMap<Beer, Integer> getBeers() {
+        return beers;
+    }
+
+    public Costumer getCostumer() {
+        return costumer;
     }
 
     @Override

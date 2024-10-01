@@ -66,7 +66,23 @@ public class Beer {
         return stock;
     }
 
-    public void setOrders(Order order, int amount) {
+    public Quantities getQuantity() {
+        return quantity;
+    }
+
+    public Containers getContainers() {
+        return containers;
+    }
+
+    public String getBrewery() {
+        return brewery;
+    }
+
+    public ArrayList<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Order order) {
         if (orders == null){
             orders = new ArrayList<>();
         }
@@ -79,8 +95,8 @@ public class Beer {
 
     @Override
     public String toString() {
-        return brewery + " - " + name + " - " + containers.getContainer() + quantity.getSize()
-                + "(" + abv + "%, " + style   + ") " + ", stock=" + stock ;
+        return brewery + " - " + name + " - " + containers.getContainer()  + " " + quantity.getSize()
+                + " ( " + abv + "%, " + style   + " ) " + ", stock=" + stock  + ", id=" + idBeer;
     }
 
 

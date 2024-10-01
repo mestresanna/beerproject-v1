@@ -2,20 +2,19 @@ package be.kdg.programming3.prog3_spring.Domain;
 
 public class Costumer {
     private String contact;
-    private String CompanyName;
+    private String companyName;
     private String address;
     private String email;
     private String phone;
 
     private int idCostumer;
 
-    public Costumer(String contact, String companyName, String address, String email, String phone, int idCostumer) {
+    public Costumer(String contact, String companyName, String address, String email, String phone) {
         this.contact = contact;
-        CompanyName = companyName;
+        this.companyName = companyName;
         this.address = address;
         this.email = email;
         this.phone = phone;
-        this.idCostumer = idCostumer;
     }
     public void setIdCostumer(int idCostumer) {
         this.idCostumer = idCostumer;
@@ -26,7 +25,7 @@ public class Costumer {
     }
 
     public String getCompanyName() {
-        return CompanyName;
+        return companyName;
     }
 
     public String getAddress() {
@@ -49,7 +48,7 @@ public class Costumer {
     public String toString() {
         return "Domain.Costumer{" +
                 "contact='" + contact + '\'' +
-                ", CompanyName='" + CompanyName + '\'' +
+                ", CompanyName='" + companyName + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
