@@ -19,11 +19,15 @@ public class CostumerRepositoryImp implements CostumerRepository {
 
     @Override
     public Costumer getCostumerById(int idCostumer) {
-        return costumers.get(idCostumer-1);
+        return costumers.get(idCostumer);
     }
 
     @Override
     public List<Costumer> getAllCostumers() {
         return costumers;
+    }
+
+    public int getSize(){
+        return costumers.size();
     }
 }

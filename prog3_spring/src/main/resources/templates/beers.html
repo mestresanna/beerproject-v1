@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -7,6 +7,31 @@
 <body>
 
 <h1>Beers</h1>
+
+<table>
+    <!- String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery->
+    <tr>
+        <th>Name</th>
+        <th>Brewery</th>
+        <th>Style</th>
+        <th>Alcohol</th>
+        <th>Quantity</th>
+        <th>Containers</th>
+        <th>Stock</th>
+        <th>Price</th>
+
+    </tr>
+    <tr th:each="beer : ${beers}">
+        <td th:text="${beer.getName()}"></td>
+        <td th:text="${beer.getBrewery()}"></td>
+        <td th:text="${beer.getStyle()}"></td>
+        <td th:text="${beer.getAbv()}"></td>
+        <td th:text="${beer.getQuantity().getSize()}"></td>
+        <td th:text="${beer.getContainers().getType()}"></td>
+        <td th:text="${beer.getStock()}"></td>
+        <td th:text="${beer.getPrice()}"></td>
+    </tr>
+</table>
 
 </body>
 </html>

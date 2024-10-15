@@ -19,11 +19,19 @@ public class BeerRepositoryImp implements BeerRepository {
 
     @Override
     public Beer readBeer(int idBeer){
-        return beers.get(idBeer-1);
+        return beers.get(idBeer);
     }
 
     @Override
     public List<Beer> readAllBeers(){
         return beers;
+    }
+
+    public int getSize(){
+        return beers.size();
+    }
+
+    public int getStock(int idBeer){
+        return beers.get(idBeer).getStock();
     }
 }

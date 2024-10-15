@@ -10,4 +10,6 @@ public interface CostumerRepository {
     Costumer getCostumerById(int idCostumer);
 
     List<Costumer> getAllCostumers();
+
+    int getSize();
 }

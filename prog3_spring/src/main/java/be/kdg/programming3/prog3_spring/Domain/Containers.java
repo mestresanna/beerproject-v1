@@ -10,7 +10,7 @@ public enum Containers {
         this.container = container;
     }
 
-    public String getContainer() {
+    public String getType() {
         return container;
     }
 }

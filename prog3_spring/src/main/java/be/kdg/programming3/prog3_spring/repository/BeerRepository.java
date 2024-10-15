@@ -10,4 +10,7 @@ public interface BeerRepository {
     Beer readBeer(int idBeer);
 
     List<Beer> readAllBeers();
+
+    int getSize();
+    int getStock(int idBeer);
 }

@@ -11,13 +11,19 @@ public class Order {
     private String comments;
     private Costumer costumer;
     private HashMap<Beer, Integer> beers;
+    private int total;
 
     public Order(LocalDate date, String comments, Costumer costumer, HashMap<Beer, Integer> beers) {
         this.date = date;
         this.comments = comments;
         this.costumer = costumer;
         this.beers = beers;
+        setTotalPrice();
         setStockToBeer();
+    }
+
+    public int getTotal() {
+        return total;
     }
 
     public void setIdOrder(int idOrder) {
@@ -34,6 +40,24 @@ public class Order {
 
     public String getComments() {
         return comments;
+    }
+
+    public void setTotal(int total) {
+        this.total = total;
+    }
+
+    public void setTotalPrice() {
+        setTotal(0);
+        int price = 0;
+        if (beers!=null && beers.size()>0) {
+            for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
+                Beer key = entry.getKey();
+                Integer value = entry.getValue();
+                price += key.getPrice() * value;
+            }
+        }
+        setTotal(price);
+        //call an error when beers is empty
     }
 
     public void setStockToBeer(){

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+
+<h1>Orders</h1>
+
+<table>
+  <!- ->
+  <tr>
+    <th>Costumer</th>
+    <th>List</th>
+    <th>comments</th>
+    <th>Date</th>
+    <th>Total Price</th>
+  </tr>
+  <tr th:each="order : ${orders}">
+    <td th:text="${order.getCostumer()}"></td>
+    <td th:text="${order.getBeers()}"></td>
+    <td th:text="${order.getComments()}"></td>
+    <td th:text="${order.getDate()}"></td>
+    <td th:text="${order.getTotal()}"></td>
+
+  </tr>
+</table>
+</body>
+</html>

@@ -15,8 +15,9 @@ public class Beer {
     private Containers containers;
     private String brewery;
     private ArrayList<Order> orders;
+    private int price;
 
-    public Beer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery) {
+    public Beer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, int price) {
         this.name = name;
         this.abv = abv;
         this.plato = Optional.of(plato);
@@ -25,9 +26,10 @@ public class Beer {
         this.stock = stock;
         this.containers = containers;
         this.brewery=brewery;
+        this.price = price;
     }
 
-    public Beer(String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery) {
+    public Beer(String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery, int price) {
         this.name = name;
         this.abv = abv;
         this.plato = Optional.empty();
@@ -36,6 +38,15 @@ public class Beer {
         this.stock = stock;
         this.containers = containers;
         this.brewery=brewery;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public void setIdBeer(int idBeer) {
@@ -95,7 +106,7 @@ public class Beer {
 
     @Override
     public String toString() {
-        return brewery + " - " + name + " - " + containers.getContainer()  + " " + quantity.getSize()
+        return brewery + " - " + name + " - " + containers.getType()  + " " + quantity.getSize()
                 + " ( " + abv + "%, " + style   + " ) " + ", stock=" + stock  + ", id=" + idBeer;
     }
 

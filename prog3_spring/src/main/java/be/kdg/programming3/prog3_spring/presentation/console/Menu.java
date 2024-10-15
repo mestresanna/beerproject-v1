@@ -1,4 +1,4 @@
-package be.kdg.programming3.prog3_spring.presentation;
+package be.kdg.programming3.prog3_spring.presentation.console;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Containers;
@@ -7,7 +7,6 @@ import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CostumerService;
 import be.kdg.programming3.prog3_spring.service.OrderService;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -64,7 +63,9 @@ public class Menu {
         scanner.nextLine();
         System.out.println("Enter beer's brewery: ");
         String brewery = scanner.nextLine();
-        beerService.addBeer(name, abv, plato, style, quantities, stock, containers, brewery );
+        System.out.println("Enter beer's price: ");
+        int price = scanner.nextInt();
+        beerService.addBeer(name, abv, plato, style, quantities, stock, containers, brewery, price);
     }
 
     private void listBeers(){
