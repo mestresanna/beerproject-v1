@@ -1,10 +1,7 @@
 package be.kdg.programming3.prog3_spring.presentation;
 
-import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
-import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.OrderService;
-import be.kdg.programming3.prog3_spring.service.OrderServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,7 +23,7 @@ public class OrderController {
     }
 
     @GetMapping
-    public String getBeerView(Model model) {
+    public String getOrderView(Model model) {
         logger.debug("List of orders");
         List<Order> orders= orderService.getAllOrders();
         model.addAttribute("orders", orders);

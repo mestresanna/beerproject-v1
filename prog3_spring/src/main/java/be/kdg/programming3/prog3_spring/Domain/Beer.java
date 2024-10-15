@@ -45,6 +45,15 @@ public class Beer {
         return price;
     }
 
+    public int getPlatoBeer(){
+        if (plato.get()==null){
+            return 0;
+        }
+        else {
+            return plato.get();
+        }
+    }
+
     public void setPrice(int price) {
         this.price = price;
     }

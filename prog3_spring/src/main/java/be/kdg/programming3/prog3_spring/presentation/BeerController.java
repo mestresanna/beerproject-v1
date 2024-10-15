@@ -1,14 +1,19 @@
 package be.kdg.programming3.prog3_spring.presentation;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
+import be.kdg.programming3.prog3_spring.Domain.Containers;
+import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -30,32 +35,23 @@ public class BeerController {
         return "beers";
     }
 
-/*
-   public DogController(DogService dogService) {
-        this.dogService=dogService;
-    }
-
-    @GetMapping
-    public String getDogsVIew(Model model) {
-        logger.debug("Dog List");
-        List<Dog> dogs= dogService.getDogs();
-        model.addAttribute("dogs", dogs);
-        return "dogs";
-    }
-
     @GetMapping("/add")
-    public String getAddDogForm(){
-        return "adddog";
+    public String getAddBeer(Model model) {
+        return "addBeer";
     }
 
+    //String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery, int price
     @PostMapping("/add")
-    public String processAddDog(Model model, Dog dog) {
-        logger.debug("Recieve form data for a new dog:" + dog.getName());
-        List<DogType> dogTypes = new ArrayList<DogType>(Arrays.asList(DogType.values()));
-        model.addAttribute("dogTypes", dogTypes);
-        dogService.addDog(dog.getName(), dog.getDogType());
-        return "redirect:/dogs";
+    public String processAddBeer(Model model, Beer beer) {
+        logger.debug("Recieve data for a new beer:" + beer.getName());
+        List<Quantities> beerQuantities = new ArrayList<Quantities>(Arrays.asList(Quantities.values()));
+        model.addAttribute("beerQuantities", beerQuantities);
+        List<Containers> beerContainers = new ArrayList<Containers>(Arrays.asList(Containers.values()));
+        model.addAttribute("beerContainers", beerContainers);
+        beerService.addBeer(beer.getName(), beer.getAbv(), beer.getPlatoBeer(),  beer.getStyle(), beer.getQuantity(), beer.getStock(), beer.getContainers(), beer.getBrewery(), beer.getPrice());
+        return "redirect:/beers";
     }
- */
+
+
 
 }

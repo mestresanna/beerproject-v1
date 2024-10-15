@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Beer</title>
+</head>
+<body>
+
+<h1>Add Beer</h1>
+<form method="post">
+  <label for="name">Name</label><input type = "text" name = "name" id = "name"/>
+  <br>
+  <label for="type">Type</label>
+  <select id="type">
+      <option value="0">select option</option>
+      <option th:each="beerQuantity : ${beerContainers}" th:value="${beerQuantity}" th:text="${beerQuantity}">
+      </option>
+  </select>
+    <!--
+
+    <select class="form-control" id="dropDownList">
+    <option value="0">select option</option>
+    <option th:each="option : ${options}" th:value="${option}" th:text="${option}"></option>
+</select>
+
+    https://www.baeldung.com/thymeleaf-select-option
+  <select th:field="*{percentage}">
+  <option th:each="i : ${#numbers.sequence(0, 100)}" th:value="${i}" th:text="${i}">
+  </option>
+</select>-->
+  </select>
+  <br>
+  <input type = "submit" name = "submit" id = "submit"/>
+</form>
+
+</body>
+</html>

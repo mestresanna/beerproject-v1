@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Costumers</title>
+</head>
+<body>
+<div>
+    <a href="/beer">All Beers</a> |
+    <a href="/costumer">All Costumers</a> |
+    <a href="/orders">All Orders</a> |
+    <a href="/addBeer">Add a Beer</a> |
+   <!-- <a href="/orders">Add an Order</a> |
+    <a href="/orders">Add a Costumer</a> |-->
+</div>
+
+<h1>Costumers</h1>
+
+<table>
+    <!- ->
+    <tr>
+        <th>Name</th>
+        <th>Company Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Phone</th>
+    </tr>
+    <tr th:each="costumer : ${costumers}">
+        <td th:text="${costumer.getContact()}"></td>
+        <td th:text="${costumer.getCompanyName()}"></td>
+        <td th:text="${costumer.getAddress()}"></td>
+        <td th:text="${costumer.getEmail()}"></td>
+        <td th:text="${costumer.getPhone()}"></td>
+    </tr>
+
+</table>
+</body>
+</html>
