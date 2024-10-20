@@ -5,9 +5,7 @@ public enum Quantities {
     TALLBOY("16oz"), STOVEPIPE("19,2oz"), CROWLER("32oz");
 
     private final String size;
-
-    // private enum constructor
-    private Quantities(String size) {
+    Quantities(String size) {
         this.size = size;
     }
 

@@ -5,20 +5,29 @@
     <title>Beers</title>
 </head>
 <body>
+<div>
+    <a th:href="@{/beers}">All Beers</a> |
+    <a th:href="@{/costumer}">All Costumers</a> |
+    <a th:href="@{/orders}">All Orders</a> |
+    <a th:href="@{/beer/add}">Add a Beer</a> |
+    <!-- <a href="/orders">Add an Order</a> |
+     <a href="/orders">Add a Costumer</a> |-->
+</div>
 
 <h1>Beers</h1>
 
 <table>
-    <!- String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery->
+    <!-- String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery-->
     <tr>
         <th>Name</th>
         <th>Brewery</th>
         <th>Style</th>
         <th>Alcohol</th>
-        <th>Quantity</th>
-        <th>Containers</th>
         <th>Stock</th>
         <th>Price</th>
+        <th>Quantity</th>
+        <th>Containers</th>
+
 
     </tr>
     <tr th:each="beer : ${beers}">
@@ -26,10 +35,11 @@
         <td th:text="${beer.getBrewery()}"></td>
         <td th:text="${beer.getStyle()}"></td>
         <td th:text="${beer.getAbv()}"></td>
-        <td th:text="${beer.getQuantity().getSize()}"></td>
-        <td th:text="${beer.getContainers().getType()}"></td>
         <td th:text="${beer.getStock()}"></td>
         <td th:text="${beer.getPrice()}"></td>
+        <td th:text="${beer.getQuantity().getSize()}"></td>
+        <td th:text="${beer.getContainers()}"></td>
+
     </tr>
 </table>
 

@@ -65,7 +65,8 @@ public class Menu {
         String brewery = scanner.nextLine();
         System.out.println("Enter beer's price: ");
         int price = scanner.nextInt();
-        beerService.addBeer(name, abv, plato, style, quantities, stock, containers, brewery, price);
+        Beer beer = new Beer(name, abv, plato, style, quantities, stock, containers, brewery, price);
+        beerService.addBeer(beer);
     }
 
     private void listBeers(){

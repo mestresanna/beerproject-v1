@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.List;
 
 @Controller
-@RequestMapping("/beer")
+@RequestMapping("/beers")
 public class BeerController {
 
     private final Logger logger= LoggerFactory.getLogger(BeerController.class);
@@ -37,21 +38,18 @@ public class BeerController {
 
     @GetMapping("/add")
     public String getAddBeer(Model model) {
+        List<Quantities> quantities = new ArrayList<Quantities>(Arrays.asList(Quantities.values()));
+        model.addAttribute("quantity", quantities);
+        List<Containers> containers = new ArrayList<Containers>(Arrays.asList(Containers.values()));
+        model.addAttribute("container", containers);
         return "addBeer";
     }
-
-    //String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery, int price
     @PostMapping("/add")
-    public String processAddBeer(Model model, Beer beer) {
-        logger.debug("Recieve data for a new beer:" + beer.getName());
-        List<Quantities> beerQuantities = new ArrayList<Quantities>(Arrays.asList(Quantities.values()));
-        model.addAttribute("beerQuantities", beerQuantities);
-        List<Containers> beerContainers = new ArrayList<Containers>(Arrays.asList(Containers.values()));
-        model.addAttribute("beerContainers", beerContainers);
+    public String processAddBeer(Beer beer) {
+        logger.debug("Recieve data for a new beer:" + beer);
         beerService.addBeer(beer.getName(), beer.getAbv(), beer.getPlatoBeer(),  beer.getStyle(), beer.getQuantity(), beer.getStock(), beer.getContainers(), beer.getBrewery(), beer.getPrice());
         return "redirect:/beers";
     }
-
 
 
 }

@@ -21,7 +21,13 @@ public class BeerServiceImp implements BeerService {
     }
 
     @Override
-    public void addBeer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, int price){
+    public Beer addBeer(Beer beer) {
+        logger.info("Adding Beer {}" + beer);
+        return beerRepository.createBeer(beer);
+    }
+
+    @Override
+    public void addBeer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price){
         logger.info("Adding Beer with name {} from {}", name, brewery);
         Beer beer = new Beer(name, abv, plato, style, quantity, stock, containers, brewery, price);
         beerRepository.createBeer(beer);
