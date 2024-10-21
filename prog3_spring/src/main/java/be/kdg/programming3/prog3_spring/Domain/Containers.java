@@ -4,6 +4,7 @@ public enum Containers {
     BOTTLE("bottle"), CAN("can"), KEG("keg");
 
     private final String name;
-    Containers(String name) {this.name = name;}
+    Containers(String name) { this.name = name; }
+
     public String getName() {return name;}
 }

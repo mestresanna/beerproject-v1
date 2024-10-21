@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Order</title>
+</head>
+<body>
+<div>
+    <a href="/beers">All Beers</a> |
+    <a href="/costumer">All Costumers</a> |
+    <a href="/orders">All Orders</a> |
+    <a href="/beers/add">Add a Beer</a> |
+    <a href="/costumer/add">Add a Costumer</a> |
+</div>
+
+/LocalDate date, String comments, Costumer costumer, HashMap<Beer, Integer> beers
+<h1>Add Order</h1>
+<form method="post">
+    <label for="costumer">Costumer</label>
+    <select id="costumer" name="costumer">
+        <option th:each="costumer : ${costumerName}" th:value="${costumer}" th:text="${costumer}">
+        </option>
+    </select>
+    <br>
+    <label for="comments">Comments</label><input type = "text" name = "comments" id = "comments"/>
+    <br>
+    <select id="beer" name="beer">
+        <option th:each="beer : ${beerList.name}" th:value="${beer}" th:text="${beer}">
+        </option>
+    </select>
+    <button type="submit">Add Costumer</button>
+</form>
+
+</body>
+</html>

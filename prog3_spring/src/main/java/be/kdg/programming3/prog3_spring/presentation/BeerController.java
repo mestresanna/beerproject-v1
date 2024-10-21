@@ -38,10 +38,8 @@ public class BeerController {
 
     @GetMapping("/add")
     public String getAddBeer(Model model) {
-        List<Quantities> quantities = new ArrayList<Quantities>(Arrays.asList(Quantities.values()));
-        model.addAttribute("quantity", quantities);
-        List<Containers> containers = new ArrayList<Containers>(Arrays.asList(Containers.values()));
-        model.addAttribute("container", containers);
+        model.addAttribute("quantity", Quantities.values());
+        model.addAttribute("container", Containers.values());
         return "addBeer";
     }
     @PostMapping("/add")

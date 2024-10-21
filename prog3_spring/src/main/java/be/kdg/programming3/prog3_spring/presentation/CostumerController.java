@@ -1,7 +1,6 @@
 package be.kdg.programming3.prog3_spring.presentation;
 
-import be.kdg.programming3.prog3_spring.Domain.Costumer;
-import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.Domain.*;
 import be.kdg.programming3.prog3_spring.service.CostumerService;
 import be.kdg.programming3.prog3_spring.service.OrderService;
 import org.slf4j.Logger;
@@ -9,8 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -30,6 +32,21 @@ public class CostumerController {
         List<Costumer> costumers= costumerService.getAllCostumers();
         model.addAttribute("costumers", costumers);
         return "costumers";
+    }
+
+
+    @GetMapping("/add")
+    public String getAddBeer(Model model) {
+        model.addAttribute("quantity", Quantities.values());
+        model.addAttribute("container", Containers.values());
+        return "addCostumer";
+    }
+    //String contact, String companyName, String address, String email, String phone
+    @PostMapping("/add")
+    public String processAddBeer(Costumer costumer) {
+        logger.debug("Recieve data for a new beer:" + costumer);
+        costumerService.addCostumer(costumer.getContact(), costumer.getCompanyName(), costumer.getAddress(),costumer.getEmail(), costumer.getPhone());
+        return "redirect:/costumer";
     }
 
 
