@@ -37,8 +37,6 @@ public class CostumerController {
 
     @GetMapping("/add")
     public String getAddBeer(Model model) {
-        model.addAttribute("quantity", Quantities.values());
-        model.addAttribute("container", Containers.values());
         return "addCostumer";
     }
     //String contact, String companyName, String address, String email, String phone
