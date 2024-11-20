@@ -12,7 +12,9 @@
 </div>
 
 <!--LocalDate date, String comments, Costumer costumer, HashMap<Beer, Integer> beers-->
+<div class="container mt-5">
 <h1>Add Order</h1>
+</div>
 <p>Under construction</p>
 <!--<form method="post">
     <label for="costumer">Costumer</label>
@@ -29,6 +31,29 @@
     </select>
     <button type="submit">Add Costumer</button>
 </form>-->
+<div class="container col-sm-8">
+    <form class="row justify-content-md-center">
+        <div class="mb-3">
+            <label for="costumer" class="form-label">Costumer</label>
+            <select id="costumer" name="costumer" class="form-select">
+                <option th:each="costumer : ${costumerName}" th:value="${costumer}" th:text="${costumer}"/>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="comments" class="form-label">Comments</label>
+            <input type = "text" name = "comments" id = "comments" class="form-control"/>
+        </div>
+        <div class="mb-3">
+            <label for="beer" class="form-label">Beers</label>
+            <select id="beer" name="beer" class="form-select">
+                <option th:each="beer : ${beerList.name}" th:value="${beer}" th:text="${beer}">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
 <div th:replace="~{fragments::footer}">
 </div>
 
