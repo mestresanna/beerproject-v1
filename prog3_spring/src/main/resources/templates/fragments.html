@@ -10,44 +10,49 @@
 </head>
 <body>
 <div th:fragment="header">
-  <nav class="navbar bg-dark border-bottom border-body navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">Beer Project</a>
+  <nav class="navbar navbar-expand-lg bg-white border-bottom">
+    <div class="container">
+      <!-- Logo amb mida ajustada -->
+      <a class="navbar-brand" href="/">
+        <img th:src="@{/images/logo.png}" alt="Beer Project" style="height: 50px;">
+      </a>
+      <!-- Botó de menú per a dispositius mòbils -->
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <!-- Menú centrat -->
+      <div class="collapse navbar-collapse justify-content-center" id="navbarText">
+        <ul class="navbar-nav mb-2 mb-lg-0">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown" aria-expanded="false" th:href="@{/beers}">Beer</a>
+            <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:href="@{/beers}">Beer</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" th:href="@{/beers}">Beers</a></li>
               <li><a class="dropdown-item" th:href="@{/beers/add}">Add Beer</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:href="@{/costumer}">Costumers</a>
+            <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:href="@{/costumer}">Customers</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" th:href="@{/costumer}">Customer</a></li>
               <li><a class="dropdown-item" th:href="@{/costumer/add}">Add Customer</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:href="@{/orders}">Orders</a>
+            <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false" th:href="@{/orders}">Orders</a>
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" th:href="@{/orders}">Orders</a></li>
               <li><a class="dropdown-item" th:href="@{/orders/add}">Add Orders</a></li>
             </ul>
           </li>
-
         </ul>
       </div>
     </div>
   </nav>
 </div>
 
+
 <div th:fragment="footer" class="navbar navbar-fixed-bottom">
-  <footer class="bg-light text-center text-lg-start">
+  <footer class="bg-dark text-white text-center py-3 fixed-bottom">
     <p> &COPY; KdG 2024</p>
   </footer>
 </div>

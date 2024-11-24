@@ -115,7 +115,7 @@ public class Beer {
 
     @Override
     public String toString() {
-        return brewery + " - " + name + " - " + containers.getName() + " " + quantity.getSize();
+        return brewery + " - " + name + " - " + containers.getName() + " " + quantity.getSize() + " " + stock;
     }
 
 
