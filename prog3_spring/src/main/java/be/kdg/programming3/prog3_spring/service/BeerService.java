@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BeerService {
     Beer addBeer(Beer beer);
-    void addBeer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price);
+    void addBeer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl);
     Beer getBeerById(int id);
 
     List<Beer> getAllBeers();

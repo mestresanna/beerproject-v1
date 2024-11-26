@@ -9,6 +9,8 @@ public interface OrderRepository {
 
     void setOrderToBeer(Order order);
 
+    void setOrderToCustomer(Order order);
+
     Order readOrder(int orderId);
 
     List<Order> readAllOrders();

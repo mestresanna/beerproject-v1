@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface OrderService {
-    void addOrder(String comments, Costumer costumer, HashMap<Beer, Integer> beers);
+    void addOrder(String comments, Costumer costumer, HashMap<Beer, Integer> beers, String urlImg);
 
     Order getOrder(int idOrder);
 

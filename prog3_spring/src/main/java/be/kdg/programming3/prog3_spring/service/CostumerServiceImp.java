@@ -17,9 +17,9 @@ public class CostumerServiceImp implements CostumerService {
     }
 
     @Override
-    public void addCostumer(String contact, String companyName, String address, String email, String phone) {
+    public void addCostumer(String contact, String companyName, String address, String email, String phone, String urlImg) {
         logger.info("Adding costumer " + contact);
-        Costumer costumer = new Costumer(contact, companyName, address, email, phone);
+        Costumer costumer = new Costumer(contact, companyName, address, email, phone, urlImg);
         costumerRepository.createCostumer(costumer);
     }
 

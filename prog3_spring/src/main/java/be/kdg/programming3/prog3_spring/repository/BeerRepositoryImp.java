@@ -30,7 +30,7 @@ public class BeerRepositoryImp implements BeerRepository {
     @Override
     public Beer createBeer(Beer beer) {
         beer.setIdBeer(beers.size());
-        logger.info("Creating new beer: {}", beer);
+        logger.info("Creating new beer: {}, with id: {}", beer, beer.getIdBeer());
         beers.add(beer);
         return beer;
     }

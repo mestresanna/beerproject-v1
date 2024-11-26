@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -37,13 +38,21 @@ public class BeerController {
     public String getAddBeer(Model model) {
         model.addAttribute("quantity", Quantities.values());
         model.addAttribute("container", Containers.values());
-        return "addBeer";
+        return "/add/addBeer";
     }
     @PostMapping("/add")
     public String processAddBeer(Beer beer) {
         logger.debug("Recieve data for a new beer:" + beer);
-        beerService.addBeer(beer.getName(), beer.getAbv(), beer.getPlatoBeer(),  beer.getStyle(), beer.getQuantity(), beer.getStock(), beer.getContainers(), beer.getBrewery(), beer.getPrice());
+        beerService.addBeer(beer.getName(), beer.getAbv(), beer.getPlatoBeer(),  beer.getStyle(), beer.getQuantity(), beer.getStock(), beer.getContainers(), beer.getBrewery(), beer.getPrice(), beer.getImageUrl());
         return "redirect:/beers";
+    }
+
+    @GetMapping("/detailBeer")
+    public String viewBeer(@RequestParam("idBeer") Integer idBeer, Model model) {
+        Beer beer = beerService.getBeerById(idBeer);
+        logger.info("View beer: " + beer);
+        model.addAttribute("beer", beer);
+        return "/detail/detailBeer";
     }
 
 

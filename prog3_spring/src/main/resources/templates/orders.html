@@ -12,9 +12,27 @@
 <div th:replace="~{fragments::header}">
 </div>
 <div class="container mt-5">
-<h1>Orders</h1>
+<h1>All Orders!</h1>
 </div>
 
+<div class="container mt-4">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 justify-content-center">
+    <div class="col " th:each="order : ${orders}">
+      <a href="detail/detailOrder.html" th:href="@{/orders/detailOrder(idOrder=${order.getIdOrder()})}" class="text-decoration-none">
+        <div class="card h-100 shadow-sm rounded text-center">
+          <img th:src="${order.getImageUrl()}" class="card-img-top" alt="beer">
+          <div class="card-body">
+            <h5 class="card-title"  th:text="${order.getIdOrder()}">Contact</h5>
+            <p class="card-text" th:text="${order.getCostumer().getContact()}" >Company</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<!--
 <div class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-sm-10 col-md-8">
@@ -29,29 +47,28 @@
         </tr>
         </thead>
         <tbody class="table-group-divider">
+
         <tr th:each="order : ${orders}">
-          <!-- Mostra el contacte del client -->
+          <a href="detail/detailOrder.html" th:href="@{/orders/detailOrder(idOrder=${order.getIdOrder()})}" class="text-decoration-none">
           <td th:text="${order.getCostumer().getContact()}"></td>
 
-          <!-- Mostra la llista de cerveses, pots ajustar la manera com es mostren -->
           <td th:text="${order.getBeers()}"></td>
 
-          <!-- Mostra els comentaris de la comanda -->
           <td th:text="${order.getComments()}"></td>
 
-          <!-- Mostra la data, pots aplicar format al backend si cal -->
           <td th:text="${order.getDate()}"></td>
 
-          <!-- Mostra el preu total -->
           <td th:text="${order.getTotal()}"></td>
+          </a>
         </tr>
+
         </tbody>
       </table>
     </div>
   </div>
 </div>
 
-
+-->
 
 <div th:replace="~{fragments::footer}">
 </div>

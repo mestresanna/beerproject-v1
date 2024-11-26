@@ -1,7 +1,10 @@
 package be.kdg.programming3.prog3_spring.repository;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
+import be.kdg.programming3.prog3_spring.Domain.Costumer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -12,29 +15,39 @@ import java.util.Map;
 
 public class OrderRepositoryImp implements OrderRepository {
     private static List<Order> orders = new ArrayList<>();
+    private Logger logger = LoggerFactory.getLogger(OrderRepositoryImp.class);
 
     @Override
     public Order createOrder(Order order) {
         orders.add(order);
-        order.setIdOrder(orders.size() + 1);
+        order.setIdOrder(orders.size()-1);
         setOrderToBeer(order);
+        setOrderToCustomer(order);
+        logger.info("Creating new beer: {}, with id: {}", order, order.getIdOrder());
         return order;
+    }
+
+    @Override
+    public void setOrderToCustomer(Order order){
+        Costumer customer = order.getCostumer();
+        customer.setOrders(order);
     }
 
     @Override
     public void setOrderToBeer(Order order){
         HashMap<Beer, Integer> beers = order.getBeers();
-        if (beers!=null && beers.size()>0) {
+        if (beers!=null && !beers.isEmpty()) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
                 key.setOrders(order);
+                logger.debug(key.toString());
             }
         }
     }
 
     @Override
     public Order readOrder(int orderId) {
-        return orders.get(orderId - 1);
+        return orders.get(orderId);
     }
 
     @Override

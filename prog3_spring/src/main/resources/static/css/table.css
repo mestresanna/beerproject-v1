@@ -3,30 +3,33 @@
     border-collapse: collapse; /* Evita els espais entre les cel·les */
 }
 
-/* Ajusta el text del capçal de la taula */
 .table th {
     font-weight: bold;
     text-align: center;
     vertical-align: middle;
 }
 
-/* Centra les dades de la taula */
 .table td {
     vertical-align: middle;
 }
 
 .table tbody tr:nth-of-type(odd) {
-    /* Fons negre */
     color: #fff; /* Text blanc */
 }
 
-/* Assegura que el text de les cel·les es mantingui blanc a files imparells */
+.table tbody tr:nth-of-type(odd) a{
+    color: #fff; /* Text blanc */
+}
+
 .table tbody tr:nth-of-type(odd) td {
     color: #fff;
     background-color: black;
 }
 
-/* Opcional: estil per a files parells per a mantenir contrast */
 .table tbody tr:nth-of-type(even) {
     background-color: #f8f9fa; /* Color clar per a les files parells */
+}
+
+.table tbody tr:nth-of-type(even) a {
+    color: black; /* Color clar per a les files parells */
 }

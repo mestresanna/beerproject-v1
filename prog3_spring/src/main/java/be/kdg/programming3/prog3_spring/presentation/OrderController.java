@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -34,12 +35,20 @@ public class OrderController {
 
     @GetMapping("/add")
     public String getAddBeer(Model model) {
-        return "addOrders";
+        return "/add/addOrders";
     }
     //String contact, String companyName, String address, String email, String phone
+
     @PostMapping("/add")
     public String processAddBeer() {
         return "redirect:/orders";
     }
 
+    @GetMapping("/detailOrder")
+    public String viewBeer(@RequestParam("idOrder") Integer idOrder, Model model) {
+        Order order = orderService.getOrder(idOrder);
+        logger.info("View order: " + order);
+        model.addAttribute("order", order);
+        return "/detail/detailOrder";
+    }
 }

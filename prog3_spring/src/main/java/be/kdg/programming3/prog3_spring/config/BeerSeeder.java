@@ -26,17 +26,17 @@ public class BeerSeeder implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Random random = new Random();
         //String name, double abv, String style, plato, Quantities quantity, int stock, Containers containers, String brewery
-        Stream.generate(()->new Beer("beer"+ random.nextInt(100), random.nextDouble(20),random.nextInt(100), "IPA",
+        Stream.generate(()->new Beer("beer"+ random.nextInt(100), Math.round(random.nextDouble(20) * 100.0) / 100.0,random.nextInt(100), "IPA",
                         Quantities.values()[random.nextInt(Quantities.values().length)], random.nextInt(300),
-                Containers.values()[random.nextInt(Containers.values().length)], "Omnipollo"+random.nextInt(100), random.nextDouble(15)))
+                Containers.values()[random.nextInt(Containers.values().length)], "Omnipollo"+random.nextInt(100), Math.round(random.nextDouble(15) * 100.0) / 100.0, "/images/beer.jpg"))
                 .limit(10)
                 .forEach(beerRepository::createBeer);
 
-        Stream.generate(()-> new Costumer("Lola"+random.nextInt(100), "KdG", "Kerkstraat 15, 2060", "lola"+random.nextInt(100)+"@gmail.com", "+32546789"+random.nextInt(100)))
+        Stream.generate(()-> new Costumer("Lola"+random.nextInt(100), "KdG", "Kerkstraat 15, 2060", "lola"+random.nextInt(100)+"@gmail.com", "+32546789"+random.nextInt(100), "/images/person.png"))
                 .limit(10)
                 .forEach(costumerRepository::createCostumer);
 
-        Stream.generate(()->new Order(LocalDate.now(),"comment"+random.nextInt(100), costumerRepository.getCostumerById(random.nextInt(costumerRepository.getSize())), generateRandomBeers()))
+        Stream.generate(()->new Order(LocalDate.now(),"comment"+random.nextInt(100), costumerRepository.getCostumerById(random.nextInt(costumerRepository.getSize())), generateRandomBeers(), "/images/orders.jpg"))
                 .limit(5).forEach(orderRepository::createOrder);
     }
 

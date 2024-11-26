@@ -1,6 +1,7 @@
 package be.kdg.programming3.prog3_spring.Domain;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Optional;
 
 public class Beer {
@@ -16,8 +17,9 @@ public class Beer {
     private String brewery;
     private ArrayList<Order> orders;
     private double price;
+    private String imageUrl;
 
-    public Beer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price) {
+    public Beer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl) {
         this.name = name;
         this.abv = abv;
         this.plato = Optional.of(plato);
@@ -27,6 +29,7 @@ public class Beer {
         this.containers = containers;
         this.brewery=brewery;
         this.price = price;
+        this.imageUrl = imageUrl;
     }
 /*
     public Beer(String name, double abv, String style, Quantities quantity, int stock, Containers containers, String brewery, int price) {
@@ -109,13 +112,22 @@ public class Beer {
         orders.add(order);
     }
 
+
     public void setStock(int quantity){
         stock-=quantity;
     }
 
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     @Override
     public String toString() {
-        return brewery + " - " + name + " - " + containers.getName() + " " + quantity.getSize() + " " + stock;
+        return brewery + " - " + name + " - " + containers.getName() + " " + quantity.getSize();
     }
 
 

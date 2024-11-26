@@ -65,7 +65,10 @@ public class Menu {
         String brewery = scanner.nextLine();
         System.out.println("Enter beer's price: ");
         int price = scanner.nextInt();
-        Beer beer = new Beer(name, abv, plato, style, quantities, stock, containers, brewery, price);
+        scanner.nextLine();
+        System.out.println("Enter beer's image: ");
+        String image = scanner.nextLine();
+        Beer beer = new Beer(name, abv, plato, style, quantities, stock, containers, brewery, price, image);
         beerService.addBeer(beer);
     }
 
@@ -79,9 +82,11 @@ public class Menu {
         Costumer costumer = costumerService.getCostumer(idCostumer);
         System.out.println("Enter Comments: ");
         String comments = scanner.nextLine();
+        System.out.println("Enter img: ");
+        String urlImg = scanner.nextLine();
         HashMap<Beer, Integer> beers = new HashMap<>();
         makeListBeers(beers);
-        orderService.addOrder(comments, costumer,beers);
+        orderService.addOrder(comments, costumer,beers, urlImg);
 
     }
 
@@ -127,7 +132,9 @@ public class Menu {
         String phone = scanner.nextLine();
         System.out.println("Enter Email: ");
         String email = scanner.nextLine();
-        costumerService.addCostumer(contact, company, address, email, phone);
+        System.out.println("Enter img: ");
+        String urlImg = scanner.nextLine();
+        costumerService.addCostumer(contact, company, address, email, phone, urlImg);
     }
 
     private void listCostumers(){
