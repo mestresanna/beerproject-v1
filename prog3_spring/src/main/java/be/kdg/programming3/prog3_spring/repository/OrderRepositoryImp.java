@@ -1,12 +1,12 @@
 package be.kdg.programming3.prog3_spring.repository;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
-import be.kdg.programming3.prog3_spring.Domain.Costumer;
+import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +20,7 @@ public class OrderRepositoryImp implements OrderRepository {
     @Override
     public Order createOrder(Order order) {
         orders.add(order);
+        order.setDate(LocalDate.now());
         order.setIdOrder(orders.size()-1);
         setOrderToBeer(order);
         setOrderToCustomer(order);
@@ -29,7 +30,7 @@ public class OrderRepositoryImp implements OrderRepository {
 
     @Override
     public void setOrderToCustomer(Order order){
-        Costumer customer = order.getCostumer();
+        Customer customer = order.getCustomer();
         customer.setOrders(order);
     }
 

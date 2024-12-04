@@ -23,9 +23,9 @@ public class BeerServiceImp implements BeerService {
     }
 
     @Override
-    public Beer addBeer(Beer beer) {
-        logger.info("Adding Beer {}" + beer);
-        return beerRepository.createBeer(beer);
+    public void addBeer(Beer beer) {
+        logger.info("Adding Beer {}", beer);
+        beerRepository.createBeer(beer);
     }
 
     @Override

@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"/>
     </script>
-    <link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
 
 </head>
 <body>
@@ -23,7 +23,7 @@
         <div class="col">
             <a th:href="@{/beers}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                <img th:src="@{/images/beer.jpg}" class="card-img-top" alt="beer">
+                <img th:src="@{/images/beers.png}" class="card-img-top img-fluid w-50 mx-auto" alt="beer">
                 <div class="card-body">
                     <h5 class="card-title">Beer</h5>
                     <p class="card-text">List of all the beers</p>
@@ -34,9 +34,9 @@
 
         <!-- Segona targeta -->
         <div class="col">
-            <a th:href="@{/costumer}" class="text-decoration-none">
+            <a th:href="@{/customer}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                <img th:src="@{/images/tap.jpg}" class="card-img-top" alt="customer">
+                <img th:src="@{/images/customers.png}" class="card-img-top img-fluid w-50 mx-auto" alt="customer">
                 <div class="card-body">
                     <h5 class="card-title">Customers</h5>
                     <p class="card-text">List of all customers</p>
@@ -49,7 +49,7 @@
         <div class="col">
             <a th:href="@{/orders}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                <img th:src="@{/images/orders.jpg}" class="card-img-top" alt="orders">
+                <img th:src="@{/images/shopping-cart.png}" class="card-img-top img-fluid w-50 mx-auto" alt="orders">
                 <div class="card-body">
                     <h5 class="card-title">Orders</h5>
                     <p class="card-text">List of all Orders</p>
@@ -62,7 +62,7 @@
         <div class="col">
             <a th:href="@{/beers/add}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                <img th:src="@{/images/beer.jpg}" class="card-img-top" alt="add beer">
+                <img th:src="@{/images/logo.png}" class="card-img-top img-fluid w-50 mx-auto" alt="add beer">
                 <div class="card-body">
                     <h5 class="card-title">Add Beer</h5>
                     <p class="card-text">Create a new beer</p>
@@ -73,9 +73,9 @@
 
         <!-- Cinquena targeta -->
         <div class="col">
-            <a th:href="@{/costumer/add}" class="text-decoration-none">
+            <a th:href="@{/customer/add}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                <img th:src="@{/images/tap.jpg}" class="card-img-top" alt="add customer">
+                <img th:src="@{/images/person.png}" class="card-img-top img-fluid w-50 mx-auto" alt="add customer">
                 <div class="card-body">
                     <h5 class="card-title">Add Customers</h5>
                     <p class="card-text">Create a new customer</p>
@@ -88,7 +88,7 @@
         <div class="col">
             <a th:href="@{/orders/add}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                <img th:src="@{/images/orders.jpg}" class="card-img-top" alt="add orders">
+                <img th:src="@{/images/add_order.png}" class="card-img-top img-fluid w-50 mx-auto" alt="add orders">
                 <div class="card-body">
                     <h5 class="card-title">Add Orders</h5>
                     <p class="card-text">Create a new order</p>

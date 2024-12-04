@@ -1,52 +1,59 @@
-package be.kdg.programming3.prog3_spring.Domain;
+package be.kdg.programming3.prog3_spring.presentation.viewModels;
+
+import be.kdg.programming3.prog3_spring.Domain.Containers;
+import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.Domain.Quantities;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
 
-public class Beer {
-    //implements beer
+public class BeerViewModel {
+    @NotBlank(message = "Name is required")
     private String name;
     private int idBeer;
+    @Min(0)
+    @Max(100)
+    @NotBlank(message = "Alcohol is required")
     private double abv;
+    @Min(0)
+    @Max(100)
     private Optional<Integer> plato;
+    @NotBlank(message = "Style is required")
     private String style;
+    @NotBlank(message = "Quantity is required")
     private Quantities quantity;
+    @Min(0)
+    @NotBlank(message = "Stock is required")
     private int stock;
+    @NotBlank(message = "Container is required")
     private Containers containers;
+    @NotBlank(message = "Brewery is required")
     private String brewery;
     private ArrayList<Order> orders;
+    @Min(0)
+    @NotBlank(message = "Brewery is required")
     private double price;
     private String imageUrl;
 
-    public Beer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl) {
+    public BeerViewModel() {
+    }
+
+    public BeerViewModel(String name, int idBeer, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, ArrayList<Order> orders, double price, String imageUrl) {
         this.name = name;
+        this.idBeer = idBeer;
         this.abv = abv;
-        this.plato = Optional.of(plato);
+        this.plato = Optional.ofNullable(plato);
         this.style = style;
         this.quantity = quantity;
         this.stock = stock;
         this.containers = containers;
-        this.brewery=brewery;
+        this.brewery = brewery;
+        this.orders = orders;
         this.price = price;
         this.imageUrl = imageUrl;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public int getPlatoBeer(){
-        if (plato.get()==null){
-            return 0;
-        }
-        else {
-            return plato.get();
-        }
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setAbv(double abv) {
@@ -57,26 +64,28 @@ public class Beer {
         this.plato = plato;
     }
 
-    public void setStyle(String style) {
-        this.style = style;
-    }
-
-    public void setQuantity(Quantities quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public void setContainers(Containers containers) {
-        this.containers = containers;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setBrewery(String brewery) {
         this.brewery = brewery;
     }
 
+    public void setStyle(String style) {
+        this.style = style;
+    }
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getPlatoBeer(){
+        return plato != null && plato.isPresent() ? plato.get() : 0;
+    }
 
     public void setPrice(double price) {
         this.price = price;
@@ -108,6 +117,14 @@ public class Beer {
 
     public int getStock() {
         return stock;
+    }
+
+    public void setQuantity(Quantities quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setContainers(Containers containers) {
+        this.containers = containers;
     }
 
     public Quantities getQuantity() {
@@ -150,7 +167,4 @@ public class Beer {
     public String toString() {
         return brewery + " - " + name + " - " + containers.getName() + " " + quantity.getSize();
     }
-
-
-
 }

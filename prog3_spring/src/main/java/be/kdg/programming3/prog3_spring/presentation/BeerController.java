@@ -3,15 +3,13 @@ package be.kdg.programming3.prog3_spring.presentation;
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Containers;
 import be.kdg.programming3.prog3_spring.Domain.Quantities;
+import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerViewModel;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,12 +36,22 @@ public class BeerController {
     public String getAddBeer(Model model) {
         model.addAttribute("quantity", Quantities.values());
         model.addAttribute("container", Containers.values());
+        model.addAttribute("beerViewModel", new BeerViewModel());
+
         return "/add/addBeer";
+
     }
     @PostMapping("/add")
-    public String processAddBeer(Beer beer) {
-        logger.debug("Recieve data for a new beer:" + beer);
-        beerService.addBeer(beer.getName(), beer.getAbv(), beer.getPlatoBeer(),  beer.getStyle(), beer.getQuantity(), beer.getStock(), beer.getContainers(), beer.getBrewery(), beer.getPrice(), beer.getImageUrl());
+    public String processAddBeer(@ModelAttribute("beerViewModel")  BeerViewModel beerViewModel, Model model) {
+        logger.debug("Recieve data for a new beer:" + beerViewModel);
+        switch(beerViewModel.getContainers()){
+            case CAN ->  beerViewModel.setImageUrl("/images/beer-can.png");
+            case BOTTLE ->  beerViewModel.setImageUrl("/images/beer-bottle.png");
+            case KEG ->  beerViewModel.setImageUrl("/images/beer-keg.png");
+        }
+
+        Beer newBeer = new Beer(beerViewModel.getName(), beerViewModel.getAbv(), beerViewModel.getPlatoBeer(),  beerViewModel.getStyle(), beerViewModel.getQuantity(), beerViewModel.getStock(), beerViewModel.getContainers(), beerViewModel.getBrewery(), beerViewModel.getPrice(), beerViewModel.getImageUrl());
+        beerService.addBeer(newBeer);
         return "redirect:/beers";
     }
 

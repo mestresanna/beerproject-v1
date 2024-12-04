@@ -1,12 +1,11 @@
 package be.kdg.programming3.prog3_spring.service;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
-import be.kdg.programming3.prog3_spring.Domain.Costumer;
+import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -22,9 +21,8 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
-    public void addOrder(String comments, Costumer costumer, HashMap<Beer, Integer> beers, String urlImg){
-        LocalDate now = LocalDate.now();
-        Order order = new Order(now, comments, costumer, beers,urlImg );
+    public void addOrder(String comments, Customer customer, HashMap<Beer, Integer> beers, String urlImg){
+        Order order = new Order( comments, customer, beers,urlImg );
         logger.info("Order added: " + order);
         orderRepository.createOrder(order);
     }

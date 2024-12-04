@@ -2,10 +2,10 @@ package be.kdg.programming3.prog3_spring.presentation.console;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Containers;
-import be.kdg.programming3.prog3_spring.Domain.Costumer;
+import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import be.kdg.programming3.prog3_spring.service.BeerService;
-import be.kdg.programming3.prog3_spring.service.CostumerService;
+import be.kdg.programming3.prog3_spring.service.CustomerService;
 import be.kdg.programming3.prog3_spring.service.OrderService;
 
 import java.util.HashMap;
@@ -16,13 +16,13 @@ public class Menu {
 
     private OrderService orderService;
     private BeerService beerService;
-    private CostumerService costumerService;
+    private CustomerService customerService;
     private Scanner scanner = new Scanner(System.in);
 
-    public Menu(OrderService orderService, BeerService beerService,CostumerService costumerService) {
+    public Menu(OrderService orderService, BeerService beerService, CustomerService customerService) {
         this.orderService = orderService;
         this.beerService = beerService;
-        this.costumerService = costumerService;
+        this.customerService = customerService;
     }
 
     public void show() {
@@ -79,14 +79,14 @@ public class Menu {
     private void addOrder(){
         System.out.println("Enter idCostumer: ");
         int idCostumer = scanner.nextInt();
-        Costumer costumer = costumerService.getCostumer(idCostumer);
+        Customer customer = customerService.getCustomer(idCostumer);
         System.out.println("Enter Comments: ");
         String comments = scanner.nextLine();
         System.out.println("Enter img: ");
         String urlImg = scanner.nextLine();
         HashMap<Beer, Integer> beers = new HashMap<>();
         makeListBeers(beers);
-        orderService.addOrder(comments, costumer,beers, urlImg);
+        orderService.addOrder(comments, customer,beers, urlImg);
 
     }
 
@@ -134,10 +134,10 @@ public class Menu {
         String email = scanner.nextLine();
         System.out.println("Enter img: ");
         String urlImg = scanner.nextLine();
-        costumerService.addCostumer(contact, company, address, email, phone, urlImg);
+        customerService.addCustomer(contact, company, address, email, phone, urlImg);
     }
 
     private void listCostumers(){
-        costumerService.getAllCostumers().forEach(System.out::println);
+        customerService.getAllCustomers().forEach(System.out::println);
     }
 }

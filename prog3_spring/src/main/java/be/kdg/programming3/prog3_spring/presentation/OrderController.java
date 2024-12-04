@@ -1,6 +1,5 @@
 package be.kdg.programming3.prog3_spring.presentation;
 
-import be.kdg.programming3.prog3_spring.Domain.Costumer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.service.OrderService;
 import org.slf4j.Logger;

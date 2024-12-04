@@ -72,8 +72,8 @@
              <h4 th:text="${order.getIdOrder()}"></h4>
            </a></td>
          <td>
-           <a href="/costumer/detailCustomer.html" th:href="@{/costumer/detailCustomer(idCus=${order.getCostumer().getIdCostumer()})}" class="text-decoration-none">
-             <h4 th:text="${order.getCostumer().getContact()}"></h4>
+           <a href="/customer/detailCustomer.html" th:href="@{/customer/detailCustomer(idCus=${order.getCustomer().getIdCustomer()})}" class="text-decoration-none">
+             <h4 th:text="${order.getCustomer().getContact()}"></h4>
            </a></td>
           <td th:text="${order.getDate()}"></td>
 

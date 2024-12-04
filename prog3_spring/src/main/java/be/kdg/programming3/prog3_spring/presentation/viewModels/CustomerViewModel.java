@@ -1,21 +1,30 @@
-package be.kdg.programming3.prog3_spring.Domain;
+package be.kdg.programming3.prog3_spring.presentation.viewModels;
+
+import be.kdg.programming3.prog3_spring.Domain.Order;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
 
-public class Costumer {
+public class CustomerViewModel {
+    @NotBlank(message = "Contact Name is required")
     private String contact;
+    @NotBlank(message = "Company Name is required")
     private String companyName;
+    @NotBlank(message = "Address is required")
     private String address;
+    @NotBlank(message = "Email is required")
     private String email;
+    @NotBlank(message = "Phone is required")
     private String phone;
     private String imageUrl;
     private ArrayList<Order> orders;
 
 
 
-    private int idCostumer;
+    private int idCustomer;
 
-    public Costumer(String contact, String companyName, String address, String email, String phone, String imageUrl) {
+    public CustomerViewModel() {}
+    public CustomerViewModel(String contact, String companyName, String address, String email, String phone, String imageUrl) {
         this.contact = contact;
         this.companyName = companyName;
         this.address = address;
@@ -23,8 +32,28 @@ public class Costumer {
         this.phone = phone;
         this.imageUrl = imageUrl;
     }
-    public void setIdCostumer(int idCostumer) {
-        this.idCostumer = idCostumer;
+    public void setIdCustomer(int idCustomer) {
+        this.idCustomer = idCustomer;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getContact() {
@@ -47,8 +76,8 @@ public class Costumer {
         return phone;
     }
 
-    public int getIdCostumer() {
-        return idCostumer;
+    public int getIdCustomer() {
+        return idCustomer;
     }
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
@@ -70,13 +99,13 @@ public class Costumer {
 
     @Override
     public String toString() {
-        return "Domain.Costumer{" +
+        return "Domain.Customer{" +
                 "contact='" + contact + '\'' +
                 ", CompanyName='" + companyName + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", idCostumer=" + idCostumer +
+                ", idCustomer=" + idCustomer +
                 '}';
     }
 }

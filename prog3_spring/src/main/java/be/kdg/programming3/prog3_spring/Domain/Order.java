@@ -3,21 +3,19 @@ package be.kdg.programming3.prog3_spring.Domain;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.ErrorManager;
 
 public class Order {
     private int idOrder;
     private LocalDate date;
     private String comments;
-    private Costumer costumer;
+    private Customer customer;
     private HashMap<Beer, Integer> beers;
     private int total;
     private String imageUrl;
 
-    public Order(LocalDate date, String comments, Costumer costumer, HashMap<Beer, Integer> beers, String imageUrl) {
-        this.date = date;
+    public Order(String comments, Customer customer, HashMap<Beer, Integer> beers, String imageUrl) {
         this.comments = comments;
-        this.costumer = costumer;
+        this.customer = customer;
         this.beers = beers;
         setTotalPrice();
         setStockToBeer();
@@ -44,6 +42,18 @@ public class Order {
         return comments;
     }
 
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public void setTotal(int total) {
         this.total = total;
     }
@@ -67,7 +77,7 @@ public class Order {
            for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                Beer key = entry.getKey();
                Integer value = entry.getValue();
-               key.setStock(value);
+               key.reduceStock(value);
            }
        }
        //call an error when beers is empty
@@ -96,13 +106,13 @@ public class Order {
         return beers;
     }
 
-    public Costumer getCostumer() {
-        return costumer;
+    public Customer getCustomer() {
+        return customer;
     }
 
     @Override
     public String toString() {
-        return "Order { costumer=" + costumer + ", beers=" + beers +
+        return "Order { costumer=" + customer + ", beers=" + beers +
                 ", date=" + date + ", comments='" + comments + '}';
     }
 }

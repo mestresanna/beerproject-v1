@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     @Bean
-    public Menu menu(CostumerService costumerService, BeerService beerService, OrderService orderService) {
-        return new Menu(orderService, beerService, costumerService);
+    public Menu menu(CustomerService customerService, BeerService beerService, OrderService orderService) {
+        return new Menu(orderService, beerService, customerService);
     }
 
     @Bean
@@ -24,8 +24,8 @@ public class Config {
     }
 
     @Bean
-    public CostumerService costumerService(CostumerRepository costumerRepository) {
-        return new CostumerServiceImp(costumerRepository);
+    public CustomerService costumerService(CustomerRepository customerRepository) {
+        return new CustomerServiceImp(customerRepository);
     }
     @Bean
     public BeerRepository beerRepository() {
@@ -38,8 +38,8 @@ public class Config {
     }
 
     @Bean
-    public CostumerRepository costumerRepository() {
-        return new CostumerRepositoryImp();
+    public CustomerRepository costumerRepository() {
+        return new CustomerRepositoryImp();
     }
 
 }
