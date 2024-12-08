@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
@@ -37,10 +36,9 @@ public class BeerController {
         model.addAttribute("quantity", Quantities.values());
         model.addAttribute("container", Containers.values());
         model.addAttribute("beerViewModel", new BeerViewModel());
-
         return "/add/addBeer";
-
     }
+
     @PostMapping("/add")
     public String processAddBeer(@ModelAttribute("beerViewModel")  BeerViewModel beerViewModel, Model model) {
         logger.debug("Recieve data for a new beer:" + beerViewModel);
@@ -62,6 +60,5 @@ public class BeerController {
         model.addAttribute("beer", beer);
         return "/detail/detailBeer";
     }
-
 
 }

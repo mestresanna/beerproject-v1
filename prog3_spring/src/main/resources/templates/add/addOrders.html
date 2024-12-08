@@ -7,47 +7,78 @@
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"/>
     </script>
     <link rel="stylesheet" th:href="@{/css/images.css}" href="../static/css/images.css">
+    <script>
+        function addBeerEntry() {
+            const beerList = document.getElementById('beer-list');
+            const beerEntries = document.querySelectorAll('.beer-entry');
+            const newEntry = beerEntries[0].cloneNode(true);
 
+            // Actualitzar l'índex de la nova entrada
+            const newIndex = beerEntries.length;
+            newEntry.querySelectorAll('select, input').forEach((element) => {
+                if (element.name) {
+                    element.name = element.name.replace(/\[\d+\]/, `[${newIndex}]`);
+                }
+                if (element.id) {
+                    element.id = element.id.replace(/\[\d+\]/, `[${newIndex}]`);
+                }
+                element.value = ''; // Netejar els valors
+            });
+
+            beerList.appendChild(newEntry);
+        }
+    </script>
 </head>
 <body>
 <div th:replace="~{fragments::header}">
 </div>
 
-<!--LocalDate date, String comments, Costumer costumer, HashMap<Beer, Integer> beers-->
 <div class="container mt-5">
 <h1>Add Order</h1>
 </div>
 <p>Under construction</p>
-<!--
+
 <div class="container col-sm-8">
     <form class="row justify-content-md-center" th:object="${order}" th:method="post" th:action="@{/orders/add}">
         <div class="mb-3 col-sm-12">
             <label for="costumer" class="form-label">Costumer</label>
             <select id="costumer" name="costumer" class="form-select">
-                <option th:each="costumer : ${costumerNames}" th:value="${costumer}" th:text="${costumer.getName()}"/>
+                <option th:each="costumer : ${customers}" th:value="${costumer.getIdCustomer()}" th:text="${costumer.getContact()}" th:field="*{customer}"/>
             </select>
         </div>
         <div class="mb-3 col-md-12">
             <label for="comments" class="form-label">Comments</label>
-            <input type = "text" name = "comments" id = "comments" class="form-control"/>
+            <input type = "text" name = "comments" id = "comments" class="form-control" th:field="*{comments}"/>
         </div>
-        <div class="mb-3 col-md-9">
-            <label for="beer" class="form-label">Beers</label>
-            <select id="beer" name="beer" class="form-select">
-                <option th:each="beer : ${beerList}" th:value="${beer}" th:text="${beer.getName()}">
-                </option>
-            </select>
+        <!-- Secció per afegir múltiples cerveses i stocks -->
+        <div id="beer-list">
+            <div th:each="beerEntry, stat : *{beersList}" class="beer-entry row mb-3">
+                <div class="col-md-9">
+                    <label class="form-label">Beer</label>
+                    <select class="form-select" th:field="*{beersList[__${stat.index}__].beer}">
+                        <option th:each="beer : ${beers}" th:value="${beer.idBeer}" th:text="${beer.name}"></option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Stock</label>
+                    <input type="number" class="form-control" th:field="*{beersList[__${stat.index}__].stock}" required/>
+                </div>
+            </div>
         </div>
-        <div class="mb-3 col-md-3 col-sm-12">
-            <label for="stock" class="form-label">Stock</label>
-            <input type = "number" name = "stock" id = "stock" class="form-control" required th:field="*{stock}"/>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-secondary" onclick="addBeerEntry()">Add Another Beer</button>
         </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-</div> -->
+</div>
+
 
 <div th:replace="~{fragments::footer}">
 </div>
 
 </body>
+
+
 </html>

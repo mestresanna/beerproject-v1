@@ -10,7 +10,7 @@ public class Order {
     private String comments;
     private Customer customer;
     private HashMap<Beer, Integer> beers;
-    private int total;
+    private double total;
     private String imageUrl;
 
     public Order(String comments, Customer customer, HashMap<Beer, Integer> beers, String imageUrl) {
@@ -22,7 +22,7 @@ public class Order {
         this.imageUrl = imageUrl;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
@@ -54,18 +54,18 @@ public class Order {
         this.customer = customer;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
     public void setTotalPrice() {
         setTotal(0);
-        int price = 0;
+        double price = 0;
         if (beers!=null && beers.size()>0) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
                 Integer value = entry.getValue();
-                price += key.getPrice() * value;
+                price += (key.getPrice() * value);
             }
         }
         setTotal(price);

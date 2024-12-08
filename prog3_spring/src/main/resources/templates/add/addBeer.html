@@ -45,14 +45,14 @@
     <div class="mb-3 col-md-6">
         <label for="quantity" class="form-label">Quantity</label>
         <select id="quantity" name="quantity" class="form-select" required>
-            <option th:each="beerQuantity : ${quantity}"  th:text="${beerQuantity}" th:value="${beerQuantity}" th:field="*{quantity}"/>
+            <option th:each="beerQuantity : ${quantity}"  th:text="${beerQuantity.getSize()}" th:value="${beerQuantity}" th:field="*{quantity}"/>
         </select>
     </div>
 
     <div class="mb-3 col-md-6">
         <label for="containers" class="form-label">Container</label>
         <select id="containers" name="containers" class="form-select" required>
-            <option th:each="beerContainer : ${container}" th:value="${beerContainer}" th:text="${beerContainer}" th:field="*{containers}"/>
+            <option th:each="beerContainer : ${container}" th:value="${beerContainer}" th:text="${beerContainer.getName()}" th:field="*{containers}"/>
             </option>
         </select>
     </div>

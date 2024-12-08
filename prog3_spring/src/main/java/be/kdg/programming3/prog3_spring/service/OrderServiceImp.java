@@ -20,6 +20,12 @@ public class OrderServiceImp implements OrderService {
         this.orderRepository = orderRepository;
     }
 
+
+    @Override
+    public void createOrder(Order order) {
+        orderRepository.createOrder(order);
+    }
+
     @Override
     public void addOrder(String comments, Customer customer, HashMap<Beer, Integer> beers, String urlImg){
         Order order = new Order( comments, customer, beers,urlImg );
