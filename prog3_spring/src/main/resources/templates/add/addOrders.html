@@ -41,9 +41,9 @@
 <div class="container col-sm-8">
     <form class="row justify-content-md-center" th:object="${order}" th:method="post" th:action="@{/orders/add}">
         <div class="mb-3 col-sm-12">
-            <label for="costumer" class="form-label">Costumer</label>
-            <select id="costumer" name="costumer" class="form-select">
-                <option th:each="costumer : ${customers}" th:value="${costumer.getIdCustomer()}" th:text="${costumer.getContact()}" th:field="*{customer}"/>
+            <label for="customer" class="form-label">Costumer</label>
+            <select id="customer" name="customer" class="form-select" th:field="*{customer}">
+                <option th:each="customer : ${customers}" th:value="${customer.idCustomer}" th:text="${customer.contact}" />
             </select>
         </div>
         <div class="mb-3 col-md-12">

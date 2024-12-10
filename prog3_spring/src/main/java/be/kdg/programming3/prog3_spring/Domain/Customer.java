@@ -10,9 +10,6 @@ public class Customer {
     private String phone;
     private String imageUrl;
     private ArrayList<Order> orders;
-
-
-
     private int idCustomer;
 
     public Customer(String contact, String companyName, String address, String email, String phone, String imageUrl) {
