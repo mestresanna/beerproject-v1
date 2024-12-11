@@ -1,18 +1,18 @@
 package be.kdg.programming3.prog3_spring.presentation;
 
-import be.kdg.programming3.prog3_spring.Domain.Beer;
-import be.kdg.programming3.prog3_spring.Domain.Customer;
-import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.Domain.*;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerStockEntry;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerViewModel;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.OrderViewModel;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
 import be.kdg.programming3.prog3_spring.service.OrderService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,7 +52,15 @@ public class OrderController {
     }
 
     @PostMapping("/add")
-    public String processAddOrder(@ModelAttribute("orderViewModel") OrderViewModel orderViewModel, Model model) {
+    public String processAddOrder(@Valid @ModelAttribute("orderViewModel") OrderViewModel orderViewModel, BindingResult errors, Model model) {
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(error -> {
+                logger.error(error.toString());
+            });
+            model.addAttribute("customers", customerService.getAllCustomers());
+            model.addAttribute("beers", beerService.getAllBeers());
+            return "/add/addOrders";
+        }
         logger.debug("Add order: " + orderViewModel);
         orderViewModel.populateBeersMap();
         Customer customer = customerService.getCustomer(orderViewModel.getCustomer());

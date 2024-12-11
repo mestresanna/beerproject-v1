@@ -5,16 +5,21 @@ import be.kdg.programming3.prog3_spring.Domain.Containers;
 import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerViewModel;
 import be.kdg.programming3.prog3_spring.service.BeerService;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import java.util.List;
 
 @Controller
 @RequestMapping("/beers")
-public class BeerController {
+public class BeerController{
 
     private final Logger logger= LoggerFactory.getLogger(BeerController.class);
     private BeerService beerService;
@@ -40,7 +45,15 @@ public class BeerController {
     }
 
     @PostMapping("/add")
-    public String processAddBeer(@ModelAttribute("beerViewModel")  BeerViewModel beerViewModel, Model model) {
+    public String processAddBeer(@Valid  @ModelAttribute("beerViewModel")  BeerViewModel beerViewModel, BindingResult errors, Model model) {
+        if (errors.hasErrors()) {
+            errors.getAllErrors().forEach(error -> {
+                logger.error(error.toString());
+            });
+            model.addAttribute("quantity", Quantities.values());
+            model.addAttribute("container", Containers.values());
+            return "/add/addBeer";
+        }
         logger.debug("Recieve data for a new beer:" + beerViewModel);
         switch(beerViewModel.getContainers()){
             case CAN ->  beerViewModel.setImageUrl("/images/beer-can.png");

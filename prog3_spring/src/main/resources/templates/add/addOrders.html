@@ -36,41 +36,51 @@
 <div class="container mt-5">
 <h1>Add Order</h1>
 </div>
-<p>Under construction</p>
 
 <div class="container col-sm-8">
     <form class="row justify-content-md-center" th:object="${order}" th:method="post" th:action="@{/orders/add}">
         <div class="mb-3 col-sm-12">
             <label for="customer" class="form-label">Costumer</label>
-            <select id="customer" name="customer" class="form-select" th:field="*{customer}">
+            <select id="customer" name="customer" class="form-select" th:field="*{customer}" >
                 <option th:each="customer : ${customers}" th:value="${customer.idCustomer}" th:text="${customer.contact}" />
             </select>
+            <div th:if="${#fields.hasErrors('customer')}" class="text-danger">
+                <p th:errors="*{customer}">Invalid Customer</p>
+            </div>
         </div>
-        <div class="mb-3 col-md-12">
-            <label for="comments" class="form-label">Comments</label>
-            <input type = "text" name = "comments" id = "comments" class="form-control" th:field="*{comments}"/>
-        </div>
-        <!-- Secció per afegir múltiples cerveses i stocks -->
+
         <div id="beer-list">
             <div th:each="beerEntry, stat : *{beersList}" class="beer-entry row mb-3">
                 <div class="col-md-9">
                     <label class="form-label">Beer</label>
-                    <select class="form-select" th:field="*{beersList[__${stat.index}__].beer}">
+                    <select class="form-select" th:field="*{beersList[__${stat.index}__].beer}" >
+                      <!--  <option selected value="">Select a beer</option>-->
                         <option th:each="beer : ${beers}" th:value="${beer.idBeer}" th:text="${beer.name}"></option>
                     </select>
+                    <div th:if="${#fields.hasErrors('beersList[__${stat.index}__].beer')}" class="text-danger">
+                        <p th:errors="*{beersList[__${stat.index}__].beer}">Invalid beer</p>
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">Stock</label>
-                    <input type="number" class="form-control" th:field="*{beersList[__${stat.index}__].stock}" required/>
+                    <input type="number" class="form-control" th:field="*{beersList[__${stat.index}__].stock}" />
+                    <div th:if="${#fields.hasErrors('beersList[__${stat.index}__].beer')}" class="text-danger">
+                        <p th:errors="*{beersList[__${stat.index}__].beer}">Invalid Stock</p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-secondary" onclick="addBeerEntry()">Add Another Beer</button>
+            <button type="button" class="btn border-black text-black" onclick="addBeerEntry()">Add Another Beer</button>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="mb-3 col-md-12">
+            <label for="comments" class="form-label">Comments</label>
+            <textarea type = "text" name = "comments" id = "comments" class="form-control" th:field="*{comments}"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary col-md-3 bg-black text-white">Submit</button>
     </form>
 </div>
 

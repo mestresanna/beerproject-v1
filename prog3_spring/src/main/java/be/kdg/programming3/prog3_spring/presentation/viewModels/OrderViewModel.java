@@ -2,6 +2,10 @@ package be.kdg.programming3.prog3_spring.presentation.viewModels;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,11 +17,19 @@ public class OrderViewModel {
     private int idOrder;
     private LocalDate date;
     private String comments;
+
+    @Min(0)
     private int customer;
+
+    @Size(min = 1, message = "It has to have at least one Beer")
     private HashMap<Beer, Integer> beers;
+
+    @Size(min = 1, message = "It has to have at least one Beer")
     private List<BeerStockEntry> beersList = new ArrayList<>();
+
     private double total;
     private String imageUrl;
+
     private int stock;
 
     public OrderViewModel(){}

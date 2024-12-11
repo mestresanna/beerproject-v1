@@ -1,6 +1,7 @@
 package be.kdg.programming3.prog3_spring.presentation.viewModels;
 
 import be.kdg.programming3.prog3_spring.Domain.Order;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.util.ArrayList;
@@ -8,14 +9,20 @@ import java.util.ArrayList;
 public class CustomerViewModel {
     @NotBlank(message = "Contact Name is required")
     private String contact;
+
     @NotBlank(message = "Company Name is required")
     private String companyName;
+
     @NotBlank(message = "Address is required")
     private String address;
+
     @NotBlank(message = "Email is required")
+    @Email
     private String email;
+
     @NotBlank(message = "Phone is required")
     private String phone;
+
     private String imageUrl;
     private ArrayList<Order> orders;
 

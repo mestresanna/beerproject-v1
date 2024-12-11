@@ -11,31 +11,36 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class BeerViewModel {
+
     @NotBlank(message = "Name is required")
     private String name;
+
     private int idBeer;
-    @Min(0)
-    @Max(100)
-    @NotBlank(message = "Alcohol is required")
+
+    @Min(value = 0, message = "Alcohol must be 0 or higher")
+    @Max(value = 100, message = "Alcohol must be 100 or lower")
     private double abv;
-    @Min(0)
-    @Max(100)
+
     private Optional<Integer> plato;
+
     @NotBlank(message = "Style is required")
     private String style;
-    @NotBlank(message = "Quantity is required")
+
     private Quantities quantity;
-    @Min(0)
-    @NotBlank(message = "Stock is required")
+
+    @Min(value = 1, message = "Stock must be 0 or higher")
     private int stock;
-    @NotBlank(message = "Container is required")
+
     private Containers containers;
+
     @NotBlank(message = "Brewery is required")
     private String brewery;
+
     private ArrayList<Order> orders;
-    @Min(0)
-    @NotBlank(message = "Brewery is required")
+
+    @Min(value = 0, message = "Price must be 0 or higher")
     private double price;
+
     private String imageUrl;
 
     public BeerViewModel() {
@@ -84,7 +89,7 @@ public class BeerViewModel {
     }
 
     public int getPlatoBeer(){
-        return plato != null && plato.isPresent() ? plato.get() : 0;
+        return plato != null  && plato.isPresent() ? plato.get() : 0;
     }
 
     public void setPrice(double price) {
