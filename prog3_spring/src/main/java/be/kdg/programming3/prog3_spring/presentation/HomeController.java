@@ -24,16 +24,21 @@ public class HomeController {
 
     @GetMapping
     public String getBeerView(Model model, HttpSession session) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        createSessionParameters(session); // not in current use, we use Session Scope
+
+        logger.debug("Create Home");
+        return "home";
+    }
+
+    private void createSessionParameters(HttpSession session) {
+        // Uncomment to use Session Parameters instead of Session Scope
+       /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
         if (sessionMap == null) {
             logger.info("sessionMap is null, creating a new session");
             sessionMap = new HashMap<>();
             session.setAttribute("sessionMap", sessionMap);
         }
-        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() , k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
-
-        logger.debug("Create Home");
-        return "home";
+        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
+        logger.debug("sessionMap: " + sessionMap);*/
     }
 }

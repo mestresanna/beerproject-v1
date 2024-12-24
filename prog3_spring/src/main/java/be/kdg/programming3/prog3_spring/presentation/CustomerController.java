@@ -24,7 +24,7 @@ import java.util.Map;
 public class CustomerController{
     private final Logger logger= LoggerFactory.getLogger(CustomerController.class);
 
-    private CustomerService customerService;
+    private final CustomerService customerService;
 
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
@@ -33,14 +33,7 @@ public class CustomerController{
 
     @GetMapping
     public String getCustomerView(Model model, HttpSession session) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
-        if (sessionMap == null) {
-            logger.info("sessionMap is null, creating a new session");
-            sessionMap = new HashMap<>();
-            session.setAttribute("sessionMap", sessionMap);
-        }
-        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() , k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
+        createSessionParameters(session); // not in current use, we use Session Scope
 
         logger.debug("List of orders");
         List<Customer> customers = customerService.getAllCustomers();
@@ -51,20 +44,12 @@ public class CustomerController{
 
     @GetMapping("/add")
     public String getAddBeer(Model model, HttpSession session) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
-        if (sessionMap == null) {
-            logger.info("sessionMap is null, creating a new session");
-            sessionMap = new HashMap<>();
-            session.setAttribute("sessionMap", sessionMap);
-        }
-        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
+        createSessionParameters(session); // not in current use, we use Session Scope
 
         model.addAttribute("customerViewModel", new CustomerViewModel());
         return "/add/addCustomer";
     }
 
-    //String contact, String companyName, String address, String email, String phone
     @PostMapping("/add")
     public String processAddBeer(@Valid @ModelAttribute CustomerViewModel customerViewModel, BindingResult errors, Model model) {
         if (errors.hasErrors()) {
@@ -81,18 +66,23 @@ public class CustomerController{
 
     @GetMapping("/detailCustomer")
     public String viewBeer(@RequestParam("idCus") Integer idCus, Model model, HttpSession session) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        createSessionParameters(session); // not in current use, we use Session Scope
+
+        Customer customer = customerService.getCustomer(idCus);
+        logger.info("View customer: " + customer);
+        model.addAttribute("customer", customer);
+        return "/detail/detailCustomer";
+    }
+
+    private void createSessionParameters(HttpSession session) {
+        // Uncomment to use Session Parameters instead of Session Scope
+       /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
         if (sessionMap == null) {
             logger.info("sessionMap is null, creating a new session");
             sessionMap = new HashMap<>();
             session.setAttribute("sessionMap", sessionMap);
         }
         sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
-
-        Customer customer = customerService.getCustomer(idCus);
-        logger.info("View customer: " + customer);
-        model.addAttribute("customer", customer);
-        return "/detail/detailCustomer";
+        logger.debug("sessionMap: " + sessionMap);*/
     }
 }

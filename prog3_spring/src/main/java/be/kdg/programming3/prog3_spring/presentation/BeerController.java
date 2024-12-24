@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.time.LocalDateTime;
@@ -28,7 +26,7 @@ import java.util.Map;
 public class BeerController{
 
     private final Logger logger= LoggerFactory.getLogger(BeerController.class);
-    private BeerService beerService;
+    private final BeerService beerService;
 
     public BeerController(BeerService beerService) {
         this.beerService = beerService;
@@ -36,14 +34,7 @@ public class BeerController{
 
     @GetMapping
     public String getBeerView(HttpSession session, Model model) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
-        if (sessionMap == null) {
-            logger.info("sessionMap is null, creating a new session");
-            sessionMap = new HashMap<>();
-            session.setAttribute("sessionMap", sessionMap);
-        }
-        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() , k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
+        createSessionParameters(session); // not un current use, we use Session Scope
         logger.debug("List of beers");
         List<Beer> beers= beerService.getAllBeers();
         model.addAttribute("beers", beers);
@@ -52,19 +43,15 @@ public class BeerController{
 
     @GetMapping("/add")
     public String getAddBeer(Model model, HttpSession session) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
-        if (sessionMap == null) {
-            logger.info("sessionMap is null, creating a new session");
-            sessionMap = new HashMap<>();
-            session.setAttribute("sessionMap", sessionMap);
-        }
-        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
+        createSessionParameters(session); // not un current use, we use Session Scope
+
         model.addAttribute("quantity", Quantities.values());
         model.addAttribute("container", Containers.values());
         model.addAttribute("beerViewModel", new BeerViewModel());
         return "/add/addBeer";
     }
+
+
 
     @PostMapping("/add")
     public String processAddBeer(@Valid  @ModelAttribute("beerViewModel")  BeerViewModel beerViewModel, BindingResult errors, Model model) {
@@ -90,19 +77,24 @@ public class BeerController{
 
     @GetMapping("/detailBeer")
     public String viewBeer(@RequestParam("idBeer") Integer idBeer, Model model, HttpSession session) {
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        createSessionParameters(session); // not un current use, we use Session Scope
+
+        Beer beer = beerService.getBeerById(idBeer);
+        logger.info("View beer: " + beer);
+        model.addAttribute("beer", beer);
+        return "/detail/detailBeer";
+    }
+
+    private void createSessionParameters(HttpSession session) {
+        // Uncomment to use Session Parameters instead of Session Scope
+       /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
         if (sessionMap == null) {
             logger.info("sessionMap is null, creating a new session");
             sessionMap = new HashMap<>();
             session.setAttribute("sessionMap", sessionMap);
         }
         sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
-        logger.debug("sessionMap: " + sessionMap);
-
-        Beer beer = beerService.getBeerById(idBeer);
-        logger.info("View beer: " + beer);
-        model.addAttribute("beer", beer);
-        return "/detail/detailBeer";
+        logger.debug("sessionMap: " + sessionMap);*/
     }
 
 }
