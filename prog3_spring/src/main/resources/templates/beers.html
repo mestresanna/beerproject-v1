@@ -19,7 +19,7 @@
 
 <div class="container mt-4">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2 justify-content-center">
-        <!-- Targeta individual -->
+        <!-- individual card -->
         <div class="col " th:each="beer : ${beers}">
             <a href="detail/detailBeer.html" th:href="@{/beers/detailBeer(idBeer=${beer.getIdBeer()})}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">

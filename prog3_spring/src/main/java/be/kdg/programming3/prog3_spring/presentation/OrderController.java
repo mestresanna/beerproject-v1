@@ -2,11 +2,11 @@ package be.kdg.programming3.prog3_spring.presentation;
 
 import be.kdg.programming3.prog3_spring.Domain.*;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerStockEntry;
-import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerViewModel;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.OrderViewModel;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
 import be.kdg.programming3.prog3_spring.service.OrderService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/orders")
@@ -33,7 +38,15 @@ public class OrderController {
     }
 
     @GetMapping
-    public String getOrderView(Model model) {
+    public String getOrderView(Model model, HttpSession session) {
+        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        if (sessionMap == null) {
+            logger.info("sessionMap is null, creating a new session");
+            sessionMap = new HashMap<>();
+            session.setAttribute("sessionMap", sessionMap);
+        }
+        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
+        logger.debug("sessionMap: " + sessionMap);
         logger.debug("List of orders");
         List<Order> orders= orderService.getAllOrders();
         model.addAttribute("orders", orders);
@@ -41,7 +54,15 @@ public class OrderController {
     }
 
     @GetMapping("/add")
-    public String getAddOrder(Model model) {
+    public String getAddOrder(Model model, HttpSession session) {
+        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        if (sessionMap == null) {
+            logger.info("sessionMap is null, creating a new session");
+            sessionMap = new HashMap<>();
+            session.setAttribute("sessionMap", sessionMap);
+        }
+        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
+        logger.debug("sessionMap: " + sessionMap);
         logger.debug("Getting order add page");
         OrderViewModel orderViewModel = new OrderViewModel();
         orderViewModel.getBeersList().add(new BeerStockEntry()); // Afegir una entrada buida inicial
@@ -71,7 +92,15 @@ public class OrderController {
     }
 
     @GetMapping("/detailOrder")
-    public String viewBeer(@RequestParam("idOrder") Integer idOrder, Model model) {
+    public String viewBeer(@RequestParam("idOrder") Integer idOrder, Model model, HttpSession session) {
+        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        if (sessionMap == null) {
+            logger.info("sessionMap is null, creating a new session");
+            sessionMap = new HashMap<>();
+            session.setAttribute("sessionMap", sessionMap);
+        }
+        sessionMap.computeIfAbsent( ServletUriComponentsBuilder.fromCurrentRequest().toUriString() ,  k -> new ArrayList<>()).add(LocalDateTime.now());
+        logger.debug("sessionMap: " + sessionMap);
         Order order = orderService.getOrder(idOrder);
         logger.info("View order: " + order);
         model.addAttribute("order", order);
