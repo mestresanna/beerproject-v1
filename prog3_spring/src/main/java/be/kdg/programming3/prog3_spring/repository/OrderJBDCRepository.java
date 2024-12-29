@@ -13,10 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@Repository
-public class OrderRepositoryImp implements OrderRepository {
+@Repository
+public class OrderJBDCRepository implements OrderRepository {
     private static List<Order> orders = new ArrayList<>();
-    private Logger logger = LoggerFactory.getLogger(OrderRepositoryImp.class);
+    private Logger logger = LoggerFactory.getLogger(OrderJBDCRepository.class);
 
     @Override
     public Order createOrder(Order order) {

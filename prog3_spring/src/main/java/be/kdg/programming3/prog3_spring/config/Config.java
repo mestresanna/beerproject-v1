@@ -1,12 +1,11 @@
-package be.kdg.programming3.prog3_spring;
+package be.kdg.programming3.prog3_spring.config;
 
 import be.kdg.programming3.prog3_spring.presentation.console.Menu;
 import be.kdg.programming3.prog3_spring.repository.*;
 import be.kdg.programming3.prog3_spring.service.*;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+//@Configuration
 public class Config {
     @Bean
     public Menu menu(CustomerService customerService, BeerService beerService, OrderService orderService) {

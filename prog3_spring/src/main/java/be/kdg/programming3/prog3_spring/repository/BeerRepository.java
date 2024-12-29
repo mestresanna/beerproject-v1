@@ -1,13 +1,14 @@
 package be.kdg.programming3.prog3_spring.repository;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 public interface BeerRepository {
-    Beer createBeer(Beer beer);
+    Beer save(Beer beer);
 
-    Beer readBeer(int idBeer);
+    Beer findById(int idBeer);
 
     List<Beer> readAllBeers();
 

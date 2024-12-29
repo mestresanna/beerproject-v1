@@ -1,7 +1,6 @@
 package be.kdg.programming3.prog3_spring.Domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Optional;
 
 public class Beer {
@@ -23,6 +22,21 @@ public class Beer {
         this.name = name;
         this.abv = abv;
         this.plato = Optional.of(plato);
+        this.style = style;
+        this.quantity = quantity;
+        this.stock = stock;
+        this.containers = containers;
+        this.brewery=brewery;
+        this.price = price;
+        this.imageUrl = imageUrl;
+    }
+
+
+    public Beer(int id, String name, double abv, Optional<Integer> plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl) {
+        this.idBeer = id;
+        this.name = name;
+        this.abv = abv;
+        this.plato = plato;
         this.style = style;
         this.quantity = quantity;
         this.stock = stock;

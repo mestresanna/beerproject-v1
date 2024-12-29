@@ -4,10 +4,11 @@ import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public class CustomerServiceImp implements CustomerService {
     private Logger logger = LoggerFactory.getLogger(CustomerServiceImp.class);
     private CustomerRepository customerRepository;

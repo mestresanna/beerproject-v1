@@ -1,6 +1,7 @@
 package be.kdg.programming3.prog3_spring.repository;
 
 import be.kdg.programming3.prog3_spring.Domain.Customer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

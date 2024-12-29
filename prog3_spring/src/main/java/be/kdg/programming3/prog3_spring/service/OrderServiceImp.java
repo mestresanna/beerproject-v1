@@ -6,12 +6,13 @@ import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
-
+@Service
 public class OrderServiceImp implements OrderService {
     private OrderRepository orderRepository;
     private Logger logger = LoggerFactory.getLogger(OrderServiceImp.class);

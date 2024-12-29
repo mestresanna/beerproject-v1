@@ -5,18 +5,19 @@ import be.kdg.programming3.prog3_spring.service.BeerServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+//@Repository
 public class BeerRepositoryImp implements BeerRepository {
     private Logger logger = LoggerFactory.getLogger(BeerRepositoryImp.class);
     private static List<Beer> beers = new ArrayList<>();
 
 
    @Override
-    public Beer readBeer(int idBeer){
+    public Beer findById(int idBeer){
         logger.debug("Reading beer: {}", idBeer);
         return beers.get(idBeer);
     }
@@ -28,7 +29,7 @@ public class BeerRepositoryImp implements BeerRepository {
     }
 
     @Override
-    public Beer createBeer(Beer beer) {
+    public Beer save(Beer beer) {
         beer.setIdBeer(beers.size());
         logger.info("Creating new beer: {}, with id: {}", beer, beer.getIdBeer());
         beers.add(beer);

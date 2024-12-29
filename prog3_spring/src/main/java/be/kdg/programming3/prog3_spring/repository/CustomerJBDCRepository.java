@@ -8,11 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-
-//@Repository
-public class CustomerRepositoryImp implements CustomerRepository {
+@Repository
+public class CustomerJBDCRepository implements CustomerRepository {
     private static List<Customer> customers = new ArrayList<>();
-    private Logger logger = LoggerFactory.getLogger(CustomerRepositoryImp.class);
+    private Logger logger = LoggerFactory.getLogger(CustomerJBDCRepository.class);
 
 
     @Override

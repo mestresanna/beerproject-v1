@@ -7,12 +7,11 @@ import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.Stream;
 
-@Component
+//@Component
 public class BeerSeeder implements CommandLineRunner {
     private BeerRepository beerRepository;
     private OrderRepository orderRepository;
@@ -36,7 +35,7 @@ public class BeerSeeder implements CommandLineRunner {
                             case BOTTLE ->  beer.setImageUrl("/images/beer-bottle.png");
                             case KEG ->  beer.setImageUrl("/images/beer-keg.png");
                         }
-                        beerRepository.createBeer(beer);});
+                        beerRepository.save(beer);});
 
         Stream.generate(()-> new Customer("Lola"+random.nextInt(100), "KdG", "Kerkstraat 15, 2060", "lola"+random.nextInt(100)+"@gmail.com", "+32546789"+random.nextInt(100), "/images/person.png"))
                 .limit(10)
@@ -52,7 +51,7 @@ public class BeerSeeder implements CommandLineRunner {
         HashMap<Beer, Integer> beers = new HashMap<>();
         for (int i = 0; i < random.nextInt(10)+1;) {
             int id=random.nextInt(beerRepository.getSize());
-            Beer beer = beerRepository.readBeer(id);
+            Beer beer = beerRepository.findById(id);
             if (beerRepository.getStock(id)>0){
                 beers.put(beer, beerRepository.getStock(id));
                 i++;
