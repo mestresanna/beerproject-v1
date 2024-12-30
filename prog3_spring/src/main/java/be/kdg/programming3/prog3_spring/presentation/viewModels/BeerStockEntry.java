@@ -2,7 +2,9 @@ package be.kdg.programming3.prog3_spring.presentation.viewModels;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import jakarta.validation.constraints.*;
+import org.springframework.validation.annotation.Validated;
 
+@Validated
 public class BeerStockEntry {
     @NotNull(message = "not beer")
     private Beer beer;

@@ -5,7 +5,6 @@ import be.kdg.programming3.prog3_spring.repository.BeerRepository;
 import be.kdg.programming3.prog3_spring.repository.CustomerRepository;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -39,11 +38,11 @@ public class BeerSeeder implements CommandLineRunner {
 
         Stream.generate(()-> new Customer("Lola"+random.nextInt(100), "KdG", "Kerkstraat 15, 2060", "lola"+random.nextInt(100)+"@gmail.com", "+32546789"+random.nextInt(100), "/images/person.png"))
                 .limit(10)
-                .forEach(customerRepository::createCustomer);
+                .forEach(customerRepository::save);
 
 
-        Stream.generate(()->new Order("comment"+random.nextInt(100), customerRepository.getCustomerById(random.nextInt(customerRepository.getSize())), generateRandomBeers(), "/images/shopping-cart.png"))
-                .limit(5).forEach(orderRepository::createOrder);
+        Stream.generate(()->new Order("comment"+random.nextInt(100), customerRepository.findById(random.nextInt(customerRepository.getSize())), generateRandomBeers(), "/images/shopping-cart.png"))
+                .limit(5).forEach(orderRepository::save);
     }
 
     public HashMap<Beer, Integer> generateRandomBeers() {

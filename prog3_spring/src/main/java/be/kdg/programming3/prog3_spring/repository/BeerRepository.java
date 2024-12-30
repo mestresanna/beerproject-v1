@@ -14,4 +14,6 @@ public interface BeerRepository {
 
     int getSize();
     int getStock(int idBeer);
+
+    void updateBeer(Beer beer);
 }

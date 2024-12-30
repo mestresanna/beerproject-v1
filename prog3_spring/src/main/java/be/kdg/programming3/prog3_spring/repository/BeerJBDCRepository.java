@@ -2,12 +2,15 @@ package be.kdg.programming3.prog3_spring.repository;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Containers;
+import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import be.kdg.programming3.prog3_spring.exceptions.DataBaseException;
+import be.kdg.programming3.prog3_spring.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -20,6 +23,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +31,6 @@ import java.util.Optional;
 public class BeerJBDCRepository implements BeerRepository {
     private Logger logger = LoggerFactory.getLogger(BeerJBDCRepository.class);
 
-    //private static List<Beer> beers = new ArrayList<>();
     private String url;
     private String username;
     private String password;
@@ -140,13 +143,12 @@ public class BeerJBDCRepository implements BeerRepository {
 
         pscf.setReturnGeneratedKeys(true);
 
-        // Extract the plato value from Optional
         Integer platoValue = beer.getPlato().orElse(null);
 
         PreparedStatementCreator psc = pscf.newPreparedStatementCreator(List.of(
                 beer.getName(),
                 beer.getAbv(),
-                platoValue,  // Use the extracted value
+                platoValue,
                 beer.getStyle(),
                 beer.getQuantity().toString(),
                 beer.getStock(),
@@ -174,7 +176,8 @@ public class BeerJBDCRepository implements BeerRepository {
             case BOTTLE ->  imageUrl ="/images/beer-bottle.png";
             case KEG ->  imageUrl ="/images/beer-keg.png";
         }
-        return new Beer(rs.getInt("idbeer"),
+
+        Beer beer  = new Beer(rs.getInt("idbeer"),
                 rs.getString("name"),
                 rs.getDouble("abv"),
                 Optional.ofNullable(rs.getInt("plato")),
@@ -185,6 +188,29 @@ public class BeerJBDCRepository implements BeerRepository {
                 rs.getString("brewery"),
                 rs.getDouble("price"),
                 imageUrl);
+
+        jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE beerid = ?",
+                (ResultSet beerRs, int beerRowNum) -> {
+                    int quantity = beerRs.getInt("QUANTITY");
+                    int orderId = beerRs.getInt("ORDERID");
+                    beer.setOrders(orderId);
+                    return null;
+                },
+                rs.getInt("idbeer")
+        );
+        return beer;
+    }
+
+    @Override
+    public void updateBeer(Beer beer){
+        try{
+            Integer platoValue = beer.getPlato().orElse(null);
+            jdbcTemplate.update("UPDATE BEER SET NAME = ?, ABV = ?, PLATO = ?, STYLE = ?, QUANTITY = ?, STOCK = ?, CONTAINER =?, BREWERY =?, PRICE =? WHERE IDBEER = ?",
+                    beer.getName(), beer.getAbv(), platoValue, beer.getStyle(), beer.getQuantity().toString(), beer.getStock(), beer.getContainers().toString(), beer.getBrewery(), beer.getPrice(), beer.getIdBeer());
+        } catch (DataAccessException e){
+            logger.error(e.getMessage());
+            throw new DataBaseException("Error updating beer: " + e);
+        }
     }
 
 }

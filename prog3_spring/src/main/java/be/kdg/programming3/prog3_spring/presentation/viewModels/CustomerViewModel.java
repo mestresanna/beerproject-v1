@@ -3,9 +3,11 @@ package be.kdg.programming3.prog3_spring.presentation.viewModels;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 
+@Validated
 public class CustomerViewModel {
     @NotBlank(message = "Contact Name is required")
     private String contact;
@@ -24,7 +26,7 @@ public class CustomerViewModel {
     private String phone;
 
     private String imageUrl;
-    private ArrayList<Order> orders;
+    private ArrayList<Integer> orders;
 
 
 
@@ -93,11 +95,11 @@ public class CustomerViewModel {
     public String getImageUrl() {
         return imageUrl;
     }
-    public ArrayList<Order> getOrders() {
+    public ArrayList<Integer> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order order) {
+    public void setOrders(Integer order) {
         if (orders == null){
             orders = new ArrayList<>();
         }

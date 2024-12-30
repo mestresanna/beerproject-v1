@@ -9,8 +9,18 @@ public class Customer {
     private String email;
     private String phone;
     private String imageUrl;
-    private ArrayList<Order> orders;
+    private ArrayList<Integer> orders;
     private int idCustomer;
+
+    public Customer(int idCustomer, String contact, String companyName, String address, String email, String phone, String imageUrl ) {
+        this.contact = contact;
+        this.companyName = companyName;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+        this.idCustomer = idCustomer;
+        this.imageUrl = imageUrl;
+    }
 
     public Customer(String contact, String companyName, String address, String email, String phone, String imageUrl) {
         this.contact = contact;
@@ -44,6 +54,7 @@ public class Customer {
         this.phone = phone;
     }
 
+
     public String getContact() {
         return contact;
     }
@@ -74,11 +85,11 @@ public class Customer {
     public String getImageUrl() {
         return imageUrl;
     }
-    public ArrayList<Order> getOrders() {
+    public ArrayList<Integer> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order order) {
+    public void setOrders(Integer order) {
         if (orders == null){
             orders = new ArrayList<>();
         }

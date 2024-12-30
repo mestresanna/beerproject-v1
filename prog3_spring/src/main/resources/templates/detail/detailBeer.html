@@ -66,7 +66,7 @@
         </tr>
         </thead>
         <tbody class="table-group-divider text-center">
-       <tr th:each="order : ${beer.getOrders()}">
+       <tr th:each="order : ${orderList}">
          <td>
            <a href="/orders/detailOrder.html" th:href="@{/orders/detailOrder(idOrder=${order.getIdOrder()})}" class="text-decoration-none">
              <h4 th:text="${order.getIdOrder()}"></h4>
@@ -77,7 +77,7 @@
            </a></td>
           <td th:text="${order.getDate()}"></td>
 
-         <td th:text="${order.getStockToBeer(beer)}"></td>
+         <td th:text="${order.getStockToBeer(beer.getIdBeer())}"></td>
         </tr>
         </tbody>
       </table>

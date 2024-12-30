@@ -19,7 +19,7 @@ public class OrderRepositoryImp implements OrderRepository {
     private Logger logger = LoggerFactory.getLogger(OrderRepositoryImp.class);
 
     @Override
-    public Order createOrder(Order order) {
+    public Order save(Order order) {
         orders.add(order);
         order.setDate(LocalDate.now());
         order.setIdOrder(orders.size()-1);
@@ -32,7 +32,7 @@ public class OrderRepositoryImp implements OrderRepository {
     @Override
     public void setOrderToCustomer(Order order){
         Customer customer = order.getCustomer();
-        customer.setOrders(order);
+        customer.setOrders(order.getIdOrder());
     }
 
     @Override
@@ -41,14 +41,14 @@ public class OrderRepositoryImp implements OrderRepository {
         if (beers!=null && !beers.isEmpty()) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
-                key.setOrders(order);
+                key.setOrders(order.getIdOrder());
                 logger.debug(key.toString());
             }
         }
     }
 
     @Override
-    public Order readOrder(int orderId) {
+    public Order findById(int orderId) {
         return orders.get(orderId);
     }
 
@@ -56,5 +56,7 @@ public class OrderRepositoryImp implements OrderRepository {
     public List<Order> readAllOrders() {
         return orders;
     }
+
+
 
 }

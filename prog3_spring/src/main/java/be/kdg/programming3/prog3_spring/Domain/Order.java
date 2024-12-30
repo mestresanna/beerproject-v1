@@ -13,6 +13,17 @@ public class Order {
     private double total;
     private String imageUrl;
 
+    public Order(int id, String comments,LocalDate date,  Customer customer, HashMap<Beer, Integer> beers, String imageUrl) {
+        this.idOrder = id;
+        this.comments = comments;
+        this.date = date;
+        this.customer = customer;
+        this.beers = beers;
+        setTotalPrice();
+        setStockToBeer();
+        this.imageUrl = imageUrl;
+    }
+
     public Order(String comments, Customer customer, HashMap<Beer, Integer> beers, String imageUrl) {
         this.comments = comments;
         this.customer = customer;
@@ -83,17 +94,18 @@ public class Order {
        //call an error when beers is empty
     }
 
-    public int getStockToBeer(Beer beer){
+    public int getStockToBeer(Integer beer){
         if (beers!=null && beers.size()>0) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
-                if (key == beer) {
+                if (key.getIdBeer() == beer) {
                     return entry.getValue();
                 }
             }
         }
         return 0;
     }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }

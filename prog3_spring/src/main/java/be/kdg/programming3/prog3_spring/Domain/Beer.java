@@ -14,7 +14,7 @@ public class Beer {
     private int stock;
     private Containers containers;
     private String brewery;
-    private ArrayList<Order> orders;
+    private ArrayList<Integer> orders = new ArrayList<>();
     private double price;
     private String imageUrl;
 
@@ -48,15 +48,6 @@ public class Beer {
 
     public double getPrice() {
         return price;
-    }
-
-    public int getPlatoBeer(){
-        if (plato.get()==null){
-            return 0;
-        }
-        else {
-            return plato.get();
-        }
     }
 
     public void setName(String name) {
@@ -136,11 +127,11 @@ public class Beer {
         return brewery;
     }
 
-    public ArrayList<Order> getOrders() {
+    public ArrayList<Integer> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order order) {
+    public void setOrders(Integer order) {
         if (orders == null){
             orders = new ArrayList<>();
         }
@@ -149,7 +140,10 @@ public class Beer {
 
 
     public void reduceStock(int quantity){
-        this.stock-=quantity;
+        if (this.stock - quantity < 0) {
+            throw new IllegalArgumentException("Stock cannot be negative");
+        }
+        this.stock -= quantity;
     }
 
     public void setImageUrl(String imageUrl) {

@@ -45,4 +45,9 @@ public class BeerServiceImp implements BeerService {
         return beerRepository.readAllBeers();
     }
 
+    @Override
+    public void updateBeer(Beer beer){
+        beerRepository.updateBeer(beer);
+    }
+
 }

@@ -43,4 +43,7 @@ public class BeerRepositoryImp implements BeerRepository {
     public int getStock(int idBeer){
         return beers.get(idBeer).getStock();
     }
+
+    public void updateBeer(Beer beer){}
+
 }

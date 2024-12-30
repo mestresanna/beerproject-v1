@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.validation.annotation.Validated;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +14,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Validated
 public class OrderViewModel {
+
     private int idOrder;
     private LocalDate date;
     private String comments;
@@ -94,21 +97,24 @@ public class OrderViewModel {
     }
 
     public void setStockToBeers(){
-        if (beers!=null && beers.size()>0) {
-            for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
-                Beer key = entry.getKey();
-                Integer value = entry.getValue();
-                key.reduceStock(value);
+        try{
+            if (beers!=null && beers.size()>0) {
+                for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
+                    Beer key = entry.getKey();
+                    Integer value = entry.getValue();
+                    key.reduceStock(value);
+                }
             }
+        } catch(RuntimeException e){
         }
         //call an error when beers is empty
     }
 
-    public int getStockToBeer(Beer beer){
-        if (beers!=null && beers.size()>0) {
+    public int getStockToBeer(int beer){
+        if (beers!=null) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
-                if (key == beer) {
+                if (key.getIdBeer() == beer) {
                     return entry.getValue();
                 }
             }

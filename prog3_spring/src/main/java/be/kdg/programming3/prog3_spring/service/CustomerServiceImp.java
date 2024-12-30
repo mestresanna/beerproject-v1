@@ -20,16 +20,21 @@ public class CustomerServiceImp implements CustomerService {
     public void addCustomer(String contact, String companyName, String address, String email, String phone, String urlImg) {
         logger.info("Adding costumer " + contact);
         Customer customer = new Customer(contact, companyName, address, email, phone, urlImg);
-        customerRepository.createCustomer(customer);
+        customerRepository.save(customer);
     }
 
     @Override
     public Customer getCustomer(int idCustomer) {
-        return customerRepository.getCustomerById(idCustomer);
+        return customerRepository.findById(idCustomer);
     }
 
     @Override
     public List<Customer> getAllCustomers() {
         return customerRepository.getAllCustomers();
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
+        customerRepository.updateCustomer(customer);
     }
 }

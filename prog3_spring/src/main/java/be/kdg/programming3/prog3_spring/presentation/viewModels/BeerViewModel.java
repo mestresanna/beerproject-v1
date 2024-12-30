@@ -6,10 +6,12 @@ import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Validated
 public class BeerViewModel {
 
     @NotBlank(message = "Name is required")
@@ -36,7 +38,7 @@ public class BeerViewModel {
     @NotBlank(message = "Brewery is required")
     private String brewery;
 
-    private ArrayList<Order> orders;
+    private ArrayList<Integer> orders;
 
     @Min(value = 0, message = "Price must be 0 or higher")
     private double price;
@@ -46,7 +48,7 @@ public class BeerViewModel {
     public BeerViewModel() {
     }
 
-    public BeerViewModel(String name, int idBeer, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, ArrayList<Order> orders, double price, String imageUrl) {
+    public BeerViewModel(String name, int idBeer, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, ArrayList<Integer> orders, double price, String imageUrl) {
         this.name = name;
         this.idBeer = idBeer;
         this.abv = abv;
@@ -144,11 +146,11 @@ public class BeerViewModel {
         return brewery;
     }
 
-    public ArrayList<Order> getOrders() {
+    public ArrayList<Integer> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order order) {
+    public void setOrders(Integer order) {
         if (orders == null){
             orders = new ArrayList<>();
         }

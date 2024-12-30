@@ -3,6 +3,7 @@ package be.kdg.programming3.prog3_spring.presentation;
 import be.kdg.programming3.prog3_spring.Domain.*;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.CustomerViewModel;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
+import be.kdg.programming3.prog3_spring.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -25,9 +26,11 @@ public class CustomerController{
     private final Logger logger= LoggerFactory.getLogger(CustomerController.class);
 
     private final CustomerService customerService;
+    private final OrderService orderService;
 
-    public CustomerController(CustomerService customerService) {
+    public CustomerController(CustomerService customerService, OrderService orderService) {
         this.customerService = customerService;
+        this.orderService = orderService;
     }
 
 
@@ -71,6 +74,19 @@ public class CustomerController{
         Customer customer = customerService.getCustomer(idCus);
         logger.info("View customer: " + customer);
         model.addAttribute("customer", customer);
+
+
+        List<Order> order = new ArrayList<>();
+        logger.info("View order num customer: " + customer.getOrders());
+
+        if (customer.getOrders() != null) {
+            for (int i = 0; i < customer.getOrders().size(); i++) {
+                logger.info("View order num customer: " + customer.getOrders().get(i));
+                order.add(orderService.getOrder(customer.getOrders().get(i)));
+            }
+        }
+        logger.info("View order customer: " + order);
+        model.addAttribute("orderList", order);
         return "/detail/detailCustomer";
     }
 

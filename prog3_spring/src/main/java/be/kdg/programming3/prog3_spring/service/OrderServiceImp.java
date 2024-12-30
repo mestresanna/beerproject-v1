@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,21 +23,21 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public void createOrder(Order order) {
-        orderRepository.createOrder(order);
+        orderRepository.save(order);
     }
 
     @Override
     public void addOrder(String comments, Customer customer, HashMap<Beer, Integer> beers, String urlImg){
         Order order = new Order( comments, customer, beers,urlImg );
         logger.info("Order added: " + order);
-        orderRepository.createOrder(order);
+        orderRepository.save(order);
     }
 
 
 
     @Override
     public Order getOrder(int idOrder){
-        return orderRepository.readOrder(idOrder);
+        return orderRepository.findById(idOrder);
     }
 
     @Override

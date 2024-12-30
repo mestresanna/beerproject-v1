@@ -2,9 +2,11 @@ package be.kdg.programming3.prog3_spring.presentation;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Containers;
+import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.Domain.Quantities;
 import be.kdg.programming3.prog3_spring.presentation.viewModels.BeerViewModel;
 import be.kdg.programming3.prog3_spring.service.BeerService;
+import be.kdg.programming3.prog3_spring.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 @Controller
 @RequestMapping("/beers")
@@ -27,9 +30,11 @@ public class BeerController{
 
     private final Logger logger= LoggerFactory.getLogger(BeerController.class);
     private final BeerService beerService;
+    private final OrderService orderService;
 
-    public BeerController(BeerService beerService) {
+    public BeerController(BeerService beerService, OrderService orderService) {
         this.beerService = beerService;
+        this.orderService = orderService;
     }
 
     @GetMapping
@@ -82,6 +87,15 @@ public class BeerController{
         Beer beer = beerService.getBeerById(idBeer);
         logger.info("View beer: " + beer);
         model.addAttribute("beer", beer);
+
+        List<Order> order = new ArrayList<>();
+        if (beer.getOrders() != null) {
+            for (int i = 0; i < beer.getOrders().size(); i++) {
+                order.add(orderService.getOrder(beer.getOrders().get(i)));
+            }
+        }
+        model.addAttribute("orderList", order);
+
         return "/detail/detailBeer";
     }
 

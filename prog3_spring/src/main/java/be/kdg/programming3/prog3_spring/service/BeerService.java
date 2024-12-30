@@ -14,4 +14,6 @@ public interface BeerService {
     Beer getBeerById(int id);
 
     List<Beer> getAllBeers();
+
+    void updateBeer(Beer beer);
 }

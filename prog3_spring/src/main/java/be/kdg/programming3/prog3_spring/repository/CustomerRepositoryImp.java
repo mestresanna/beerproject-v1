@@ -16,7 +16,7 @@ public class CustomerRepositoryImp implements CustomerRepository {
 
 
     @Override
-    public Customer createCustomer(Customer customer) {
+    public Customer save(Customer customer) {
         customers.add(customer);
         customer.setIdCustomer(customers.size()-1);
         logger.info("Creating new beer: {}, with id: {}", customer, customer.getIdCustomer());
@@ -24,7 +24,7 @@ public class CustomerRepositoryImp implements CustomerRepository {
     }
 
     @Override
-    public Customer getCustomerById(int idCustomer) {
+    public Customer findById(int idCustomer) {
         logger.debug("Creating new beer: {}, with id: {}", customers.get(idCustomer), idCustomer);
         return customers.get(idCustomer);
     }
@@ -36,5 +36,9 @@ public class CustomerRepositoryImp implements CustomerRepository {
 
     public int getSize(){
         return customers.size();
+    }
+
+    @Override
+    public void updateCustomer(Customer customer) {
     }
 }
