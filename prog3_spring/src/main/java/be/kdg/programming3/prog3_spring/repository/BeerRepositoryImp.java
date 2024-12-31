@@ -4,13 +4,15 @@ import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.service.BeerServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-//@Repository
+@Repository
+@Profile("collections")
 public class BeerRepositoryImp implements BeerRepository {
     private Logger logger = LoggerFactory.getLogger(BeerRepositoryImp.class);
     private static List<Beer> beers = new ArrayList<>();

@@ -5,12 +5,15 @@ import be.kdg.programming3.prog3_spring.repository.BeerRepository;
 import be.kdg.programming3.prog3_spring.repository.CustomerRepository;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.Stream;
 
-//@Component
+@Component
+@Profile("collections")
 public class BeerSeeder implements CommandLineRunner {
     private BeerRepository beerRepository;
     private OrderRepository orderRepository;

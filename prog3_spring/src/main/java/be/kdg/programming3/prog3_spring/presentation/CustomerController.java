@@ -82,7 +82,7 @@ public class CustomerController{
         if (customer.getOrders() != null) {
             for (int i = 0; i < customer.getOrders().size(); i++) {
                 logger.info("View order num customer: " + customer.getOrders().get(i));
-                order.add(orderService.getOrder(customer.getOrders().get(i)));
+                //order.add(orderService.getOrder(customer.getOrders().get(i)));
             }
         }
         logger.info("View order customer: " + order);

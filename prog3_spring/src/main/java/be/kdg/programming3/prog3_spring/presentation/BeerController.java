@@ -91,7 +91,7 @@ public class BeerController{
         List<Order> order = new ArrayList<>();
         if (beer.getOrders() != null) {
             for (int i = 0; i < beer.getOrders().size(); i++) {
-                order.add(orderService.getOrder(beer.getOrders().get(i)));
+               // order.add(orderService.getOrder(beer.getOrders().get(i)));
             }
         }
         model.addAttribute("orderList", order);

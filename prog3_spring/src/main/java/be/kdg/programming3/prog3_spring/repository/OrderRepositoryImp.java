@@ -5,6 +5,7 @@ import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -13,7 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@Repository
+@Repository
+@Profile("collections")
 public class OrderRepositoryImp implements OrderRepository {
     private static List<Order> orders = new ArrayList<>();
     private Logger logger = LoggerFactory.getLogger(OrderRepositoryImp.class);
@@ -32,7 +34,7 @@ public class OrderRepositoryImp implements OrderRepository {
     @Override
     public void setOrderToCustomer(Order order){
         Customer customer = order.getCustomer();
-        customer.setOrders(order.getIdOrder());
+        customer.setOrders(order);
     }
 
     @Override
@@ -41,7 +43,7 @@ public class OrderRepositoryImp implements OrderRepository {
         if (beers!=null && !beers.isEmpty()) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
-                key.setOrders(order.getIdOrder());
+                key.setOrders(order);
                 logger.debug(key.toString());
             }
         }

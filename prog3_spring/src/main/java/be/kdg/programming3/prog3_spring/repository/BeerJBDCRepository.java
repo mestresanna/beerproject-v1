@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Profile("jdbc")
 public class BeerJBDCRepository implements BeerRepository {
     private Logger logger = LoggerFactory.getLogger(BeerJBDCRepository.class);
 
@@ -189,7 +191,7 @@ public class BeerJBDCRepository implements BeerRepository {
                 rs.getDouble("price"),
                 imageUrl);
 
-        jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE beerid = ?",
+       /* jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE beerid = ?",
                 (ResultSet beerRs, int beerRowNum) -> {
                     int quantity = beerRs.getInt("QUANTITY");
                     int orderId = beerRs.getInt("ORDERID");
@@ -197,7 +199,7 @@ public class BeerJBDCRepository implements BeerRepository {
                     return null;
                 },
                 rs.getInt("idbeer")
-        );
+        );*/
         return beer;
     }
 

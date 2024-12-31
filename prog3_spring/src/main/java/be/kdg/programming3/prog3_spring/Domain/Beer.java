@@ -14,7 +14,7 @@ public class Beer {
     private int stock;
     private Containers containers;
     private String brewery;
-    private ArrayList<Integer> orders = new ArrayList<>();
+    private ArrayList<Order> orders = new ArrayList<>();
     private double price;
     private String imageUrl;
 
@@ -127,11 +127,11 @@ public class Beer {
         return brewery;
     }
 
-    public ArrayList<Integer> getOrders() {
+    public ArrayList<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Integer order) {
+    public void setOrders(Order order) {
         if (orders == null){
             orders = new ArrayList<>();
         }

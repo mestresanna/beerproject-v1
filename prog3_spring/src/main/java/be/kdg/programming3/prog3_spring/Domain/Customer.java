@@ -9,7 +9,7 @@ public class Customer {
     private String email;
     private String phone;
     private String imageUrl;
-    private ArrayList<Integer> orders;
+    private ArrayList<Order> orders;
     private int idCustomer;
 
     public Customer(int idCustomer, String contact, String companyName, String address, String email, String phone, String imageUrl ) {
@@ -30,6 +30,7 @@ public class Customer {
         this.phone = phone;
         this.imageUrl = imageUrl;
     }
+    
     public void setIdCustomer(int idCustomer) {
         this.idCustomer = idCustomer;
     }
@@ -85,11 +86,11 @@ public class Customer {
     public String getImageUrl() {
         return imageUrl;
     }
-    public ArrayList<Integer> getOrders() {
+    public ArrayList<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Integer order) {
+    public void setOrders(Order order) {
         if (orders == null){
             orders = new ArrayList<>();
         }

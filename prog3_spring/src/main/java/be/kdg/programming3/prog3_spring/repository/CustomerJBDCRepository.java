@@ -4,6 +4,7 @@ import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.exceptions.DataBaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+@Profile("jdbc")
 public class CustomerJBDCRepository implements CustomerRepository {
 
     private Logger logger = LoggerFactory.getLogger(CustomerJBDCRepository.class);
