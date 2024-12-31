@@ -75,18 +75,13 @@ public class CustomerController{
         logger.info("View customer: " + customer);
         model.addAttribute("customer", customer);
 
-
-        List<Order> order = new ArrayList<>();
+        if (customer.getOrders() == null || customer.getOrders().isEmpty()) {
+            List<Order> orders = orderService.findOrdersByCustomer(customer);
+            customer.setOrders(orders);
+        }
         logger.info("View order num customer: " + customer.getOrders());
 
-        if (customer.getOrders() != null) {
-            for (int i = 0; i < customer.getOrders().size(); i++) {
-                logger.info("View order num customer: " + customer.getOrders().get(i));
-                //order.add(orderService.getOrder(customer.getOrders().get(i)));
-            }
-        }
-        logger.info("View order customer: " + order);
-        model.addAttribute("orderList", order);
+
         return "/detail/detailCustomer";
     }
 

@@ -1,6 +1,7 @@
 package be.kdg.programming3.prog3_spring.Domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customer {
     private String contact;
@@ -95,6 +96,10 @@ public class Customer {
             orders = new ArrayList<>();
         }
         orders.add(order);
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = (ArrayList<Order>) orders;
     }
 
     @Override

@@ -63,6 +63,7 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+        customer.setOrders(this);
     }
 
     public void setTotal(double total) {

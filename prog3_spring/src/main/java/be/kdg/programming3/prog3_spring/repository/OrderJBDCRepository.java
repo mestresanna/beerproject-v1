@@ -3,13 +3,11 @@ package be.kdg.programming3.prog3_spring.repository;
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
-import be.kdg.programming3.prog3_spring.exceptions.DataBaseException;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -57,44 +55,46 @@ public class OrderJBDCRepository implements OrderRepository {
         jdbcTemplate.update(psc, keyHolder);
         order.setIdOrder(keyHolder.getKey().intValue());
 
-        setOrderToBeer(order);
-        setOrderToCustomer(order);
+        loadBeerOrder(order);
+        loadCustomer(order);
         logger.debug("Creating new order: {}, with id: {}", order, order.getIdOrder());
         return order;
     }
 
     @Override
-    public void setOrderToCustomer(Order order){
+    public void loadCustomer(Order order){
         logger.debug("Setting order to customer: {}", order);
         Customer customer = order.getCustomer();
-        customer.setOrders(order);
-        saveCustomerToBeer(customer);
+        List<Order> orders = jdbcTemplate.query("SELECT * FROM ORDERS WHERE CUSTOMERID = ? ", this::mapRow, customer.getIdCustomer());
+        customer.setOrders(orders);
+        logger.info("Orders in customer with id {} , : {}", customer.getIdCustomer(), customer.getOrders());
+
     }
 
     @Override
-    public void setOrderToBeer(Order order){
+    public void loadBeerOrder(Order order){
         HashMap<Beer, Integer> beers = order.getBeers();
         if (beers!=null && !beers.isEmpty()) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
-                key.setOrders(order);
-                logger.debug("Saving " + key + " to orders");
+                logger.debug("Saving " + key + " to beer_order table");
                 PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory("INSERT INTO BEER_ORDER(BEERID, ORDERID, QUANTITY) VALUES (?,?,?)",
                         Types.INTEGER, Types.INTEGER, Types.INTEGER);
                 PreparedStatementCreator psc = pscf.newPreparedStatementCreator(List.of(key.getIdBeer(), order.getIdOrder(), entry.getValue()));
                 jdbcTemplate.update(psc);
-                saveOrderToBeer(key, order);
+                loadBeer(key, order);
+                logger.info("Orders in beer with id {} , : {}", key.getIdBeer(), key.getOrders());
             }
         }
     }
 
-
-    public void saveOrderToBeer(Beer beer, Order order){
+    @Override
+    public void loadBeer(Beer beer, Order order){
         jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE ORDERID = ? AND BEERID = ?",
                 (ResultSet beerRs, int beerRowNum) -> {
                     int quantity = beer.getStock() - beerRs.getInt("QUANTITY");
-                    beer.setOrders(order);
                     beer.setStock(quantity);
+                    findByBeer(beer);
                     beerService.updateBeer(beer);
                     return null;
                 },
@@ -103,17 +103,25 @@ public class OrderJBDCRepository implements OrderRepository {
         );
     }
 
-
-    public void saveCustomerToBeer(Customer customer){
-      /*  jdbcTemplate.query("SELECT IDORDER FROM ORDERS WHERE CUSTOMERID = ?",
-                (ResultSet customerRS, int beerRowNum) -> {
-                    int idOrder = customerRS.getInt("IDORDER");
-                    customer.setOrders(idOrder);
-                    customerService.updateCustomer(customer);
+    @Override
+    public List<Order> findByBeer(Beer beer){
+        List<Order> orders = new ArrayList<>();
+        jdbcTemplate.query("SELECT ORDERID FROM BEER_ORDER WHERE BEERID = ?",
+                (ResultSet beerRs, int beerRowNum) -> {
+                    Order order = findById(beerRs.getInt("orderid"));
+                    orders.add(order);
                     return null;
                 },
-                customer.getIdCustomer()
-        );*/
+                beer.getIdBeer());
+        return orders;
+    }
+
+    @Override
+    public List<Order> findByCustomer(Customer customer){
+      List<Order> orders =  jdbcTemplate.query("SELECT * FROM ORDERS WHERE CUSTOMERID = ?",
+                this::mapRow, customer.getIdCustomer());
+      orders.forEach(this::loadCustomer);
+        return orders;
     }
 
     @Override

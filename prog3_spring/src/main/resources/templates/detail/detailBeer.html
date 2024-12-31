@@ -66,7 +66,7 @@
         </tr>
         </thead>
         <tbody class="table-group-divider text-center">
-       <tr th:each="order : ${orderList}">
+       <tr th:each="order : ${beer.getOrders()}">
          <td>
            <a href="/orders/detailOrder.html" th:href="@{/orders/detailOrder(idOrder=${order.getIdOrder()})}" class="text-decoration-none">
              <h4 th:text="${order.getIdOrder()}"></h4>

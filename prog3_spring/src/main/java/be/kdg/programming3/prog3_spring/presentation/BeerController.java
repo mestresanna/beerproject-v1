@@ -88,14 +88,12 @@ public class BeerController{
         logger.info("View beer: " + beer);
         model.addAttribute("beer", beer);
 
-        List<Order> order = new ArrayList<>();
-        if (beer.getOrders() != null) {
-            for (int i = 0; i < beer.getOrders().size(); i++) {
-               // order.add(orderService.getOrder(beer.getOrders().get(i)));
-            }
+        if (beer.getOrders() == null || beer.getOrders().isEmpty()) {
+            List<Order> orders = orderService.findOrdersByBeer(beer);
+            beer.setOrders(orders);
         }
-        model.addAttribute("orderList", order);
 
+        logger.info("View orders beer: " + beer.getOrders());
         return "/detail/detailBeer";
     }
 

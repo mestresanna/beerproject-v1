@@ -1,6 +1,7 @@
-package be.kdg.programming3.prog3_spring.repository;
+package be.kdg.programming3.prog3_spring.repository.collection;
 
 import be.kdg.programming3.prog3_spring.Domain.Customer;
+import be.kdg.programming3.prog3_spring.repository.CustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;

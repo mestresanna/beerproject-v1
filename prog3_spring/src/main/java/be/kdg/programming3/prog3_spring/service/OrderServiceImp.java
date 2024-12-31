@@ -44,4 +44,14 @@ public class OrderServiceImp implements OrderService {
     public List<Order> getAllOrders(){
         return orderRepository.readAllOrders();
     }
+
+    @Override
+    public List<Order> findOrdersByCustomer(Customer customer) {
+        return orderRepository.findByCustomer(customer);
+    }
+
+    @Override
+    public List<Order> findOrdersByBeer(Beer beer) {
+        return orderRepository.findByBeer(beer);
+    }
 }

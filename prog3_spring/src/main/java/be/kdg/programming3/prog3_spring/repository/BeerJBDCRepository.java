@@ -33,20 +33,8 @@ import java.util.Optional;
 public class BeerJBDCRepository implements BeerRepository {
     private Logger logger = LoggerFactory.getLogger(BeerJBDCRepository.class);
 
-    private String url;
-    private String username;
-    private String password;
-
     private JdbcTemplate jdbcTemplate;
     private SimpleJdbcInsert beerInserter;
-
-   /* public BeerJBDCRepository(@Value("${spring.datasource.url}") String url,
-                                 @Value("${spring.datasource.username}") String username,
-                                 @Value("${spring.datasource.password}") String password) {
-        this.url = url;
-        this.username = username;
-        this.password = password;
-    }*/
 
     public BeerJBDCRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -63,41 +51,8 @@ public class BeerJBDCRepository implements BeerRepository {
 
     @Override
     public List<Beer> readAllBeers(){
-        logger.debug("Reading all beers");
+        try {logger.debug("Reading all beers");
         List<Beer> beers = new ArrayList<>();
-            //Create connection - statement - executeQuery - return List
-           /* List<Beer> beers = new ArrayList<>();
-            try (
-                    Connection connection = DriverManager.getConnection(url, username, password);
-                    PreparedStatement statement = connection.prepareStatement("select * from beer")) {
-                try (ResultSet resultSet =
-                             statement.executeQuery()) {
-                    while (resultSet.next()) {
-                        int id = resultSet.getInt("idbeer");
-                        String name = resultSet.getString("name");
-                        double abv = resultSet.getDouble("abv");
-                        Optional<Integer> plato = Optional.ofNullable(resultSet.getInt("plato"));
-                        String style = resultSet.getString("style");
-                        Quantities quantity = Quantities.valueOf(resultSet.getString("quantity"));
-                        int stock = resultSet.getInt("stock");
-                        Containers container = Containers.valueOf(resultSet.getString("container"));
-                        String brewery = resultSet.getString("brewery");
-                        double price = resultSet.getDouble("price");
-                        String imageUrl = "";
-                        switch(container){
-                            case CAN ->  imageUrl = "/images/beer-can.png" ;
-                            case BOTTLE ->  imageUrl ="/images/beer-bottle.png";
-                            case KEG ->  imageUrl ="/images/beer-keg.png";
-                        }
-                        Beer beer = new Beer(id, name, abv, plato, style, quantity, stock,container, brewery, price, imageUrl);
-                        beers.add(beer);
-                    }
-                }
-            } catch (SQLException e) {
-                logger.error(e.getMessage());
-                throw new DataBaseException("Problem finding all beers", e);
-            }
-        return beers;*/
         jdbcTemplate.query("SELECT * FROM BEER",
                 (ResultSet rs) -> {
                     int id = rs.getInt("idbeer");
@@ -119,6 +74,10 @@ public class BeerJBDCRepository implements BeerRepository {
                     beers.add(beer);
                 });
         return beers;
+        } catch (DataAccessException e) {
+            logger.error(e.getMessage());
+            throw new DataBaseException("Error reading all beers");
+        }
     }
 
     @Override
@@ -165,7 +124,7 @@ public class BeerJBDCRepository implements BeerRepository {
         return beer;
     }
 
-
+    @Override
     public int getStock(int idBeer){
         return findById(idBeer).getStock();
     }
@@ -191,15 +150,6 @@ public class BeerJBDCRepository implements BeerRepository {
                 rs.getDouble("price"),
                 imageUrl);
 
-       /* jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE beerid = ?",
-                (ResultSet beerRs, int beerRowNum) -> {
-                    int quantity = beerRs.getInt("QUANTITY");
-                    int orderId = beerRs.getInt("ORDERID");
-                    beer.setOrders(orderId);
-                    return null;
-                },
-                rs.getInt("idbeer")
-        );*/
         return beer;
     }
 

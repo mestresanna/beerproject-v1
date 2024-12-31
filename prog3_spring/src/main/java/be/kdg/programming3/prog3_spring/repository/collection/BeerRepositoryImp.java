@@ -1,11 +1,10 @@
-package be.kdg.programming3.prog3_spring.repository;
+package be.kdg.programming3.prog3_spring.repository.collection;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
-import be.kdg.programming3.prog3_spring.service.BeerServiceImp;
+import be.kdg.programming3.prog3_spring.repository.BeerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

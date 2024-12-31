@@ -1,6 +1,7 @@
 package be.kdg.programming3.prog3_spring.Domain;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class Beer {
@@ -131,13 +132,16 @@ public class Beer {
         return orders;
     }
 
-    public void setOrders(Order order) {
+    public void setOrder(Order order) {
         if (orders == null){
             orders = new ArrayList<>();
         }
         orders.add(order);
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = (ArrayList<Order>) orders;
+    }
 
     public void reduceStock(int quantity){
         if (this.stock - quantity < 0) {

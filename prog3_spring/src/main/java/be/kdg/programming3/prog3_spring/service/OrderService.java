@@ -16,4 +16,8 @@ public interface OrderService {
     Order getOrder(int idOrder);
 
     List<Order> getAllOrders();
+
+    List<Order> findOrdersByCustomer(Customer customer);
+    List<Order> findOrdersByBeer(Beer beer);
+
 }

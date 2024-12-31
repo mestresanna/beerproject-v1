@@ -1,8 +1,9 @@
-package be.kdg.programming3.prog3_spring.repository;
+package be.kdg.programming3.prog3_spring.repository.collection;
 
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -25,25 +26,25 @@ public class OrderRepositoryImp implements OrderRepository {
         orders.add(order);
         order.setDate(LocalDate.now());
         order.setIdOrder(orders.size()-1);
-        setOrderToBeer(order);
-        setOrderToCustomer(order);
+        loadBeerOrder(order);
+        loadCustomer(order);
         logger.info("Creating new beer: {}, with id: {}", order, order.getIdOrder());
         return order;
     }
 
     @Override
-    public void setOrderToCustomer(Order order){
+    public void loadCustomer(Order order){
         Customer customer = order.getCustomer();
         customer.setOrders(order);
     }
 
     @Override
-    public void setOrderToBeer(Order order){
+    public void loadBeerOrder(Order order){
         HashMap<Beer, Integer> beers = order.getBeers();
         if (beers!=null && !beers.isEmpty()) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
-                key.setOrders(order);
+                key.setOrder(order);
                 logger.debug(key.toString());
             }
         }
@@ -59,6 +60,19 @@ public class OrderRepositoryImp implements OrderRepository {
         return orders;
     }
 
+    @Override
+    public void loadBeer(Beer beer, Order order) {
+    }
+
+    @Override
+    public List<Order> findByBeer(Beer beer) {
+        return beer.getOrders();
+    }
+
+    @Override
+    public List<Order> findByCustomer(Customer customer) {
+        return customer.getOrders();
+    }
 
 
 }
