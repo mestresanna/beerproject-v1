@@ -14,4 +14,5 @@ public interface CustomerService {
     List<Customer> getAllCustomers();
 
     void updateCustomer(Customer customer);
+    void delete(int id);
 }

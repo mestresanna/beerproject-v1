@@ -45,6 +45,7 @@ public class OrderRepositoryImp implements OrderRepository {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 Beer key = entry.getKey();
                 key.setOrder(order);
+                loadBeer(key, order);
                 logger.debug(key.toString());
             }
         }
@@ -62,6 +63,17 @@ public class OrderRepositoryImp implements OrderRepository {
 
     @Override
     public void loadBeer(Beer beer, Order order) {
+        HashMap<Beer, Integer> beers = order.getBeers();
+        if (beers!=null && beers.size()>0) {
+            for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
+                Beer key = entry.getKey();
+                if (key == beer) {
+                    int quantity = entry.getValue();
+                    key.setStock(key.getStock() - quantity);
+                }
+            }
+        }
+
     }
 
     @Override
@@ -73,6 +85,13 @@ public class OrderRepositoryImp implements OrderRepository {
     public List<Order> findByCustomer(Customer customer) {
         return customer.getOrders();
     }
+
+    @Override
+    public void delete(int id) {
+    }
+
+    @Override
+    public void deleteBeer(int id, int beerId) {}
 
 
 }

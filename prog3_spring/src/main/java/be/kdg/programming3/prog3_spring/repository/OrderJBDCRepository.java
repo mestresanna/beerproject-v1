@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -158,6 +159,38 @@ public class OrderJBDCRepository implements OrderRepository {
                 customerService.getCustomer(rs.getInt("customerid")), beers, imageUrl);
     }
 
+    @Override
+    @Transactional
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE ORDER_ID = ?)", id);
+        jdbcTemplate.update("DELETE FROM ORDERS WHERE IDORDER = ?", id);
 
+        logger.debug("Deleting order with id: {}", id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteBeer(int id, int beerId) {
+        resetStock(beerId, id);
+        jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE ORDERID = ? AND BEERID = ?", id, beerId);
+
+        logger.debug("Deleting order with id: {}", id);
+    }
+
+    public void resetStock(int beerId, int orderId){
+        jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE ORDERID = ? AND BEERID = ?",
+                (ResultSet beerRs, int beerRowNum) -> {
+                    int quantity = beerRs.getInt("QUANTITY");
+                    int currentStock = jdbcTemplate.queryForObject("SELECT STOCK FROM BEER WHERE IDBEER = ?", Integer.class, beerId);
+                    int newStock = currentStock + quantity;
+
+                    jdbcTemplate.update("UPDATE BEER SET STOCK = ? WHERE IDBEER = ?", newStock, beerId);
+                    logger.info("Reset stock for beer with id: {} on {}, quantity {} and currentStock {}", beerId, newStock, quantity, currentStock);
+                    return null;
+                },
+                orderId,
+                beerId
+        );
+    }
 
 }

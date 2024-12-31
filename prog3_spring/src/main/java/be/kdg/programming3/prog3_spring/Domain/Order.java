@@ -20,7 +20,7 @@ public class Order {
         this.customer = customer;
         this.beers = beers;
         setTotalPrice();
-        setStockToBeer();
+        //setStockToBeer();
         this.imageUrl = imageUrl;
     }
 
@@ -29,7 +29,7 @@ public class Order {
         this.customer = customer;
         this.beers = beers;
         setTotalPrice();
-        setStockToBeer();
+        //setStockToBeer();
         this.imageUrl = imageUrl;
     }
 

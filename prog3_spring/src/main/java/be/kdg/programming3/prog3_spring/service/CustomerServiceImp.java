@@ -37,4 +37,10 @@ public class CustomerServiceImp implements CustomerService {
     public void updateCustomer(Customer customer) {
         customerRepository.updateCustomer(customer);
     }
+
+
+    @Override
+    public void delete(int id){
+        customerRepository.delete(id);
+    }
 }

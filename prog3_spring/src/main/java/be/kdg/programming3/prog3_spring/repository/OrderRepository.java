@@ -23,4 +23,6 @@ public interface OrderRepository {
     List<Order> findByBeer(Beer beer);
 
     List<Order> findByCustomer(Customer customer);
+    void delete(int id);
+    void deleteBeer(int id, int beerId);
 }

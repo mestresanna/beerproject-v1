@@ -16,4 +16,6 @@ public interface BeerService {
     List<Beer> getAllBeers();
 
     void updateBeer(Beer beer);
+
+    void delete(int id);
 }

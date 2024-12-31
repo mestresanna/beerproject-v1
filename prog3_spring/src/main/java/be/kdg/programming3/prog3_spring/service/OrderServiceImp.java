@@ -54,4 +54,14 @@ public class OrderServiceImp implements OrderService {
     public List<Order> findOrdersByBeer(Beer beer) {
         return orderRepository.findByBeer(beer);
     }
+
+    @Override
+    public void delete(int id){
+        orderRepository.delete(id);
+    }
+
+    @Override
+    public void deleteBeer(int order, int beer) {
+        orderRepository.deleteBeer(order, beer);
+    }
 }

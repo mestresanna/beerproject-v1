@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -100,4 +101,16 @@ public class CustomerJBDCRepository implements CustomerRepository {
         String imageUrl = "/images/person.png";
         return new Customer(rs.getInt("idcustomer"),rs.getString("contact"), rs.getString("companyname"), rs.getString("address"), rs.getString("email"), rs.getString("phone"), imageUrl);
     }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE ORDERID " +
+                "in (SELECT ORDERID FROM ORDERS WHERE CUSTOMERID = ?)", id);
+        jdbcTemplate.update("DELETE FROM ORDERS WHERE CUSTOMERID = ? ", id);
+        jdbcTemplate.update("DELETE FROM CUSTOMER WHERE IDCUSTOMER = ? ", id);
+
+        logger.debug("Deleting customer with id: {}", id);
+    }
+
 }

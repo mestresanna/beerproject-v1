@@ -64,6 +64,7 @@
           <th scope="col">Containers</th>
           <th scope="col">Price</th>
           <th scope="col">Amount</th>
+          <th scope="col">Delete Beer</th>
         </tr>
         </thead>
         <tbody class="table-group-divider text-center" >
@@ -77,6 +78,12 @@
           <td th:text="${beer.getKey().getContainers().getName()}"></td>
           <td th:text="${beer.getKey().getPrice()}"></td>
           <td th:text="${beer.getValue()}"></td>
+          <td>
+           <!-- <form th:action="@{orders/delete/beer(idOrder=${order.getIdOrder()}, id=${beer.getKey().getIdBeer()})}" method="get" style="display:inline;">
+            <button  type="submit"  class="btn-close" aria-label="Close"></button>
+            </form>-->
+            <a th:href="@{/orders/delete/beer(idOrder=${order.getIdOrder()}, id=${beer.getKey().getIdBeer()})}" class="text-danger" style="text-decoration: none;">❌</a>
+          </td>
         </tr>
         </tbody>
       </table>

@@ -14,4 +14,5 @@ public interface CustomerRepository {
     int getSize();
 
     void updateCustomer(Customer customer);
+    void delete(int id);
 }

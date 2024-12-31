@@ -14,11 +14,12 @@
 }
 
 .table tbody tr:nth-of-type(odd) {
-    color: #fff; /* Text blanc */
+    color: #fff; /* Text white */
+
 }
 
 .table tbody tr:nth-of-type(odd) a{
-    color: #fff; /* Text blanc */
+    color: #fff; /* Text white */
 }
 
 .table tbody tr:nth-of-type(odd) td {

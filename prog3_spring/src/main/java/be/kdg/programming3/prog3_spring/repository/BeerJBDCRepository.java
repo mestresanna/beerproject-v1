@@ -20,6 +20,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -44,9 +45,11 @@ public class BeerJBDCRepository implements BeerRepository {
    @Override
     public Beer findById(int idBeer){
         logger.debug("Reading beer: {}", idBeer);
-       return jdbcTemplate.queryForObject("SELECT * FROM BEER WHERE IDBEER = ?",
+        Beer beer = jdbcTemplate.queryForObject("SELECT * FROM BEER WHERE IDBEER = ?",
                this::mapRow,
                idBeer);
+        updateBeer(beer);
+       return beer;
     }
 
     @Override
@@ -163,6 +166,15 @@ public class BeerJBDCRepository implements BeerRepository {
             logger.error(e.getMessage());
             throw new DataBaseException("Error updating beer: " + e);
         }
+    }
+
+    @Override
+    @Transactional
+    public void delete(int id) {
+        jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE BEERID = ? ", id);
+        jdbcTemplate.update("DELETE FROM BEER WHERE BEERID=?", id);
+
+        logger.debug("Deleting all beers with id: {}", id);
     }
 
 }

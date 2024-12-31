@@ -37,14 +37,22 @@ public class BeerRepositoryImp implements BeerRepository {
         return beer;
     }
 
+    @Override
     public int getSize(){
         return beers.size();
     }
 
+    @Override
     public int getStock(int idBeer){
         return beers.get(idBeer).getStock();
     }
 
+    @Override
     public void updateBeer(Beer beer){}
+
+    @Override
+    public void delete(int id) {
+    }
+
 
 }

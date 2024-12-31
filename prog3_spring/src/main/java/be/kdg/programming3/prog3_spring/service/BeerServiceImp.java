@@ -50,4 +50,8 @@ public class BeerServiceImp implements BeerService {
         beerRepository.updateBeer(beer);
     }
 
+    @Override
+    public void delete(int id){
+        beerRepository.delete(id);
+    }
 }

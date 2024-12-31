@@ -87,7 +87,18 @@ public class OrderController {
         Order order = orderService.getOrder(idOrder);
         logger.info("View order: " + order);
         model.addAttribute("order", order);
+
         return "/detail/detailOrder";
+    }
+
+
+    @GetMapping("/delete/beer")
+    public String deleteBeer(@RequestParam("idOrder") Integer idOrder, @RequestParam("id") Integer id, HttpSession session, Model model) {
+        createSessionParameters(session); // not in current use, we use Session Scope
+
+        orderService.deleteBeer(idOrder, id);
+
+        return "redirect:/orders/detailOrder?idOrder=" + idOrder;
     }
 
     private void createSessionParameters(HttpSession session) {

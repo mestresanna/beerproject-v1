@@ -44,4 +44,7 @@ public class CustomerRepositoryImp implements CustomerRepository {
     @Override
     public void updateCustomer(Customer customer) {
     }
+
+    @Override
+    public void delete(int id) {}
 }
