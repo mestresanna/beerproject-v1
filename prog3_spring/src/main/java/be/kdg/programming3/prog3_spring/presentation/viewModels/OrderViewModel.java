@@ -42,7 +42,6 @@ public class OrderViewModel {
         this.customer = customer;
         this.beers = beers;
         setTotalPrice();
-        setStockToBeers();
         this.imageUrl = imageUrl;
     }
 
@@ -96,19 +95,6 @@ public class OrderViewModel {
         //call an error when beers is empty
     }
 
-    public void setStockToBeers(){
-        try{
-            if (beers!=null && beers.size()>0) {
-                for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
-                    Beer key = entry.getKey();
-                    Integer value = entry.getValue();
-                    key.reduceStock(value);
-                }
-            }
-        } catch(RuntimeException e){
-        }
-        //call an error when beers is empty
-    }
 
     public int getStockToBeer(int beer){
         if (beers!=null) {
@@ -129,6 +115,7 @@ public class OrderViewModel {
         this.beers.put(beer, stock);
         this.beers = beers;
     }
+
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }

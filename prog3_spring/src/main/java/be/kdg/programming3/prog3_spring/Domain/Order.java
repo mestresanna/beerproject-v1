@@ -20,7 +20,6 @@ public class Order {
         this.customer = customer;
         this.beers = beers;
         setTotalPrice();
-        //setStockToBeer();
         this.imageUrl = imageUrl;
     }
 
@@ -29,7 +28,6 @@ public class Order {
         this.customer = customer;
         this.beers = beers;
         setTotalPrice();
-        //setStockToBeer();
         this.imageUrl = imageUrl;
     }
 
@@ -82,17 +80,6 @@ public class Order {
         }
         setTotal(price);
         //call an error when beers is empty
-    }
-
-    public void setStockToBeer(){
-       if (beers!=null && beers.size()>0) {
-           for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
-               Beer key = entry.getKey();
-               Integer value = entry.getValue();
-               key.reduceStock(value);
-           }
-       }
-       //call an error when beers is empty
     }
 
     public int getStockToBeer(Integer beer){

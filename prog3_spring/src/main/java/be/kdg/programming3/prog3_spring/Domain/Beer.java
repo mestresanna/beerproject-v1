@@ -143,13 +143,6 @@ public class Beer {
         this.orders = (ArrayList<Order>) orders;
     }
 
-    public void reduceStock(int quantity){
-        if (this.stock - quantity < 0) {
-            throw new IllegalArgumentException("Stock cannot be negative");
-        }
-        this.stock -= quantity;
-    }
-
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
