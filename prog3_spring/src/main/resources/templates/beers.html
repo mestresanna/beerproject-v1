@@ -21,16 +21,23 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2 justify-content-center">
         <!-- individual card -->
         <div class="col " th:each="beer : ${beers}">
-            <a href="detail/detailBeer.html" th:href="@{/beers/detailBeer(idBeer=${beer.getIdBeer()})}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
-                    <img th:src="${beer.getImageUrl()}" class="card-img-top img-fluid w-50 mx-auto" alt="beer">
-                    <div class="card-body">
+                    <a th:href="@{/beers/delete(id=${beer.getIdBeer()})}"
+                       class="btn btn-dark btn-sm custom-delete-btn position-absolute top-0 end-0 m-2"
+                       onclick="return confirm('Are you sure you want to delete this beer?');">
+                        &times;
+                    </a>
+                <a href="detail/detailBeer.html" th:href="@{/beers/detailBeer(idBeer=${beer.getIdBeer()})}" class="text-decoration-none">
+
+                <img th:src="${beer.getImageUrl()}" class="card-img-top img-fluid w-50 mx-auto mt-4" alt="beer">
+                    <div class="card-body text-black">
                         <h5 class="card-title"  th:text="${beer.getName()}">Beer</h5>
                         <p class="card-text" th:text="${beer.getBrewery()}" >brewery
                         <p class="card-text" th:text="${beer.getQuantity().getSize()}">size</p>
                     </div>
-                </div>
-            </a>
+                </a>
+
+            </div>
         </div>
     </div>
     <div class="position-fixed start-50 translate-middle-x mt-4">

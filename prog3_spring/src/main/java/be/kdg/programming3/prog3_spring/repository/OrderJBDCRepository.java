@@ -162,7 +162,14 @@ public class OrderJBDCRepository implements OrderRepository {
     @Override
     @Transactional
     public void delete(int id) {
-        jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE ORDER_ID = ?)", id);
+        jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE ORDERID = ?",
+                (ResultSet rs, int rownum) -> {
+                 int beerId = rs.getInt("BEERID");
+                 resetStock(beerId, id);
+                 return null;
+                }, id);
+
+        jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE ORDERID = ?", id);
         jdbcTemplate.update("DELETE FROM ORDERS WHERE IDORDER = ?", id);
 
         logger.debug("Deleting order with id: {}", id);

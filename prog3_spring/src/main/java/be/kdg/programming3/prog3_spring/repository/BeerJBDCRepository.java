@@ -172,7 +172,7 @@ public class BeerJBDCRepository implements BeerRepository {
     @Transactional
     public void delete(int id) {
         jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE BEERID = ? ", id);
-        jdbcTemplate.update("DELETE FROM BEER WHERE BEERID=?", id);
+        jdbcTemplate.update("DELETE FROM BEER WHERE IDBEER=?", id);
 
         logger.debug("Deleting all beers with id: {}", id);
     }

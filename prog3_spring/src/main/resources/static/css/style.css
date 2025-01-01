@@ -17,3 +17,13 @@ img .logo{
     height: 50px;
 }
 
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.custom-delete-btn:hover {
+    color: black;
+    background-color: transparent;
+    border: 2px solid black;
+}

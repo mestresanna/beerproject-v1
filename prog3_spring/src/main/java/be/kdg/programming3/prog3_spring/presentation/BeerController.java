@@ -97,6 +97,12 @@ public class BeerController{
         return "/detail/detailBeer";
     }
 
+    @GetMapping("/delete")
+    public String deleteBeer(@RequestParam("id") int id) {
+        beerService.delete(id);
+        return "redirect:/beers";
+    }
+
     private void createSessionParameters(HttpSession session) {
         // Uncomment to use Session Parameters instead of Session Scope
        /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");

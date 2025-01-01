@@ -101,6 +101,13 @@ public class OrderController {
         return "redirect:/orders/detailOrder?idOrder=" + idOrder;
     }
 
+
+    @GetMapping("/delete")
+    public String deleteOrder(@RequestParam("id") int id) {
+        orderService.delete(id);
+        return "redirect:/orders";
+    }
+
     private void createSessionParameters(HttpSession session) {
         // Uncomment to use Session Parameters instead of Session Scope
        /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");

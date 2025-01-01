@@ -85,6 +85,12 @@ public class CustomerController{
         return "/detail/detailCustomer";
     }
 
+    @GetMapping("/delete")
+    public String deleteCustomer(@RequestParam("id") int id) {
+        customerService.delete(id);
+        return "redirect:/customer";
+    }
+
     private void createSessionParameters(HttpSession session) {
         // Uncomment to use Session Parameters instead of Session Scope
        /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
