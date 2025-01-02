@@ -6,12 +6,14 @@ import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 
 @Service
+@Profile({"collections", "jdbc", "jpa"})
 public class OrderServiceImp implements OrderService {
     private OrderRepository orderRepository;
     private Logger logger = LoggerFactory.getLogger(OrderServiceImp.class);
@@ -55,9 +57,15 @@ public class OrderServiceImp implements OrderService {
         return orderRepository.findByBeer(beer);
     }
 
+
     @Override
     public void delete(int id){
         orderRepository.delete(id);
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderRepository.updateOrder(order);
     }
 
     @Override

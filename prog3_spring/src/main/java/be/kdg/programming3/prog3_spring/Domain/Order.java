@@ -51,6 +51,7 @@ public class Order {
     public Order(String comments, Customer customer, HashMap<Beer, Integer> beers, String imageUrl) {
         this.comments = comments;
         this.customer = customer;
+        this.date = LocalDate.now();
         if (beers != null) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
                 this.addBeer(entry.getKey(), entry.getValue());
@@ -157,6 +158,7 @@ public class Order {
                 Beer beer = orderBeer.getBeer();
                 int quantity = orderBeer.getQuantity();
                 beersOrder.put(beer, quantity);
+                //beer.setStock(beer.getStock() - quantity);
             });
             return beersOrder;
         }

@@ -77,6 +77,7 @@ public class OrderController {
         orderViewModel.setImageUrl("/images/shopping-cart.png");
         Order newOrder = new Order(orderViewModel.getComments(), customer, orderViewModel.getBeers(), orderViewModel.getImageUrl());
         orderService.createOrder(newOrder);
+        logger.info("Creating order: " + newOrder);
         return "redirect:/orders";
     }
 

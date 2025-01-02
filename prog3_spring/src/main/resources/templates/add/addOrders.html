@@ -38,7 +38,7 @@
 </div>
 
 <div class="container col-sm-8">
-    <form class="row justify-content-md-center" th:object="${order}" th:method="post" th:action="@{/orders/add}">
+    <form class="row justify-content-md-center" th:object="${order}" th:method="post">
         <div class="mb-3 col-sm-12">
             <label for="customer" class="form-label">Costumer</label>
             <select id="customer" name="customer" class="form-select" th:field="*{customer}" >

@@ -20,6 +20,6 @@ public interface OrderService {
     List<Order> findOrdersByCustomer(Customer customer);
     List<Order> findOrdersByBeer(Beer beer);
     void delete(int id);
-
+    void updateOrder(Order order);
     void deleteBeer(int order, int beer);
 }
