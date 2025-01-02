@@ -56,4 +56,9 @@ public class BeerServiceImp implements BeerService {
     public void delete(int id){
         beerRepository.delete(id);
     }
+
+    @Override
+    public List<Beer> getNonAlcoholicBeer() {
+        return null;
+    }
 }

@@ -18,4 +18,6 @@ public interface BeerService {
     void updateBeer(Beer beer);
 
     void delete(int id);
+
+    List<Beer> getNonAlcoholicBeer();
 }

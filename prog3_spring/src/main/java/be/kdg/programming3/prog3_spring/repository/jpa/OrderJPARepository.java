@@ -69,7 +69,8 @@ public class OrderJPARepository implements OrderRepository {
     @Transactional
     @Override
     public void loadBeerOrder(Order order){
-        order.getOrderBeers().forEach(orderBeer -> {
+        List<OrderBeer> orderBeers = new ArrayList<>(order.getOrderBeers());
+        orderBeers.forEach(orderBeer -> {
             Beer beer = orderBeer.getBeer();
             int updatedStock = beer.getStock() - orderBeer.getQuantity();
             beer.setStock(updatedStock);
@@ -139,6 +140,7 @@ public class OrderJPARepository implements OrderRepository {
     @Transactional
     @Override
     public void deleteBeer(int orderId, int beerId) {
+        Beer beer = em.find(Beer.class, beerId);
         Order order = em.find(Order.class, orderId);
         if (order != null) {
             OrderBeer orderBeerToRemove = order.getOrderBeers().stream()
@@ -147,32 +149,23 @@ public class OrderJPARepository implements OrderRepository {
                     .orElse(null);
 
             if (orderBeerToRemove != null) {
-                order.removeOrderBeer(orderBeerToRemove);
-                resetStock(beerId, orderId);
+                // Update stock beer
+                int quantity = orderBeerToRemove.getQuantity();
+                beer.setStock(beer.getStock() + quantity);
+                em.merge(beer);
+
+                // Update total price order
+                double price = beer.getPrice();
+                order.setTotal(order.getTotal() - (quantity * price));
+
+                // Delete OrderBeer from the collection
+                order.getOrderBeers().remove(orderBeerToRemove);
+                em.merge(order);
+
+                // Delete orderBeer from database
                 em.remove(orderBeerToRemove);
             }
         }
-    }
-
-    @Transactional
-    public void resetStock(int beerId, int orderId){
-        Order order = em.find(Order.class, orderId);
-        Beer beer = em.find(Beer.class, beerId);
-
-        if (order != null && beer != null) {
-            OrderBeer orderBeer = order.getOrderBeers().stream()
-                    .filter(ob -> ob.getBeer().getIdBeer() == beerId)
-                    .findFirst()
-                    .orElse(null);
-
-            if (orderBeer != null) {
-                int quantity = orderBeer.getQuantity();
-                int newStock = beer.getStock() + quantity;
-                beer.setStock(newStock);
-                em.merge(beer);
-            }
-        }
-
     }
 
 }

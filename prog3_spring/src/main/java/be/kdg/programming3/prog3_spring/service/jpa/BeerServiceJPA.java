@@ -61,4 +61,10 @@ public class BeerServiceJPA implements BeerService {
     public void delete(int id){
         beerRepository.deleteById(id);
     }
+
+    @Override
+    public List<Beer> getNonAlcoholicBeer(){
+        double nonAbv = 0.5;
+        return beerRepository.findByAbvLessThanEqual(nonAbv);
+    }
 }

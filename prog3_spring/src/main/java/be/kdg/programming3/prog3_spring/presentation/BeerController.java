@@ -43,6 +43,12 @@ public class BeerController{
         logger.debug("List of beers");
         List<Beer> beers= beerService.getAllBeers();
         model.addAttribute("beers", beers);
+
+        List<Beer> nonAlcoholBeer = beerService.getNonAlcoholicBeer();
+        if (nonAlcoholBeer != null) {
+            model.addAttribute("nonAlcoholBeer", nonAlcoholBeer);
+        }
+
         return "beers";
     }
 

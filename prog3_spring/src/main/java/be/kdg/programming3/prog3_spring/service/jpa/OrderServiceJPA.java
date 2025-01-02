@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class OrderServiceJPA implements OrderService {
     @Override
     public void createOrder(Order order) {
         orderRepository.save(order);
-        order.getOrderBeers().forEach(
+        List<OrderBeer> orderBeers = new ArrayList<>(order.getOrderBeers());
+        orderBeers.forEach(
                 orderBeer -> {
                     Beer beer = orderBeer.getBeer();
                     if (beer != null) {
