@@ -67,12 +67,14 @@
           <th scope="col">Delete Beer</th>
         </tr>
         </thead>
-        <tbody class="table-group-divider text-center" >
-        <tr  th:each="beer : ${order.getBeers()}">
+        <tbody class="table-group-divider text-center">
+        <!-- if list of get beers is not empty  -->
+        <tr th:each="beer : ${order.getBeers()}" th:if="${order.getBeers()?.size() > 0 || order.getBeers() != null}">
           <td>
             <a href="/beers/detailBeer.html" th:href="@{/beers/detailBeer(idBeer=${beer.getKey().getIdBeer()})}" class="text-decoration-none">
               <h4 th:text="${beer.getKey().getName()}">Beer Name</h4>
-            </a></td>
+            </a>
+          </td>
           <td th:text="${beer.getKey().getBrewery()}"></td>
           <td th:text="${beer.getKey().getQuantity().getSize()}"></td>
           <td th:text="${beer.getKey().getContainers().getName()}"></td>
@@ -84,7 +86,27 @@
               ❌</a>
           </td>
         </tr>
+
+        <!-- if list of get beers is empty go throw orderBeer -->
+        <tr th:each="orderBeer : ${orderBeer}" th:if="${order.getBeers()?.size() == 0 || order.getBeers() == null}">
+          <td>
+            <a href="/beers/detailBeer.html" th:href="@{/beers/detailBeer(idBeer=${orderBeer.getBeer().getIdBeer()})}" class="text-decoration-none">
+              <h4 th:text="${orderBeer.getBeer().getName()}">Beer Name</h4>
+            </a>
+          </td>
+          <td th:text="${orderBeer.getBeer().getBrewery()}"></td>
+          <td th:text="${orderBeer.getBeer().getQuantity().getSize()}"></td>
+          <td th:text="${orderBeer.getBeer().getContainers().getName()}"></td>
+          <td th:text="${orderBeer.getBeer().getPrice()}"></td>
+          <td th:text="${orderBeer.getQuantity()}"></td>
+          <td>
+            <a th:href="@{/orders/delete/beer(idOrder=${order.getIdOrder()}, id=${orderBeer.getBeer().getIdBeer()})}" class="text-danger" style="text-decoration: none;"
+               onclick="return confirm('Are you sure you want to delete this Beer from the Order?');">
+              ❌</a>
+          </td>
+        </tr>
         </tbody>
+
       </table>
     </div>
   </div>

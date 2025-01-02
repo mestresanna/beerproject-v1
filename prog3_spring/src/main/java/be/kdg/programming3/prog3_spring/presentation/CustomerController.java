@@ -72,14 +72,14 @@ public class CustomerController{
         createSessionParameters(session); // not in current use, we use Session Scope
 
         Customer customer = customerService.getCustomer(idCus);
-        logger.info("View customer: " + customer);
+        logger.debug("View customer: " + customer);
         model.addAttribute("customer", customer);
 
         if (customer.getOrders() == null || customer.getOrders().isEmpty()) {
             List<Order> orders = orderService.findOrdersByCustomer(customer);
             customer.setOrders(orders);
         }
-        logger.info("View order num customer: " + customer.getOrders());
+        logger.debug("View order num customer: " + customer.getOrders());
 
 
         return "/detail/detailCustomer";

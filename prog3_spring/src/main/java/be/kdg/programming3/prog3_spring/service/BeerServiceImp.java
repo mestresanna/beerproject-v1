@@ -35,14 +35,14 @@ public class BeerServiceImp implements BeerService {
 
     @Override
     public Beer getBeerById(int id) {
-        logger.info("Getting Beer with id {}", id);
+        logger.debug("Getting Beer with id {}", id);
         return beerRepository.findById(id);
     }
 
     @Override
     public List<Beer> getAllBeers() {
-        logger.info("Getting All Beers");
-        return beerRepository.readAllBeers();
+        logger.debug("Getting All Beers");
+        return beerRepository.findAll();
     }
 
     @Override

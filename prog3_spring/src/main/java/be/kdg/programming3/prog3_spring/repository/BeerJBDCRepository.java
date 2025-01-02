@@ -53,7 +53,7 @@ public class BeerJBDCRepository implements BeerRepository {
     }
 
     @Override
-    public List<Beer> readAllBeers(){
+    public List<Beer> findAll(){
         try {logger.debug("Reading all beers");
         List<Beer> beers = new ArrayList<>();
         jdbcTemplate.query("SELECT * FROM BEER",
@@ -61,7 +61,7 @@ public class BeerJBDCRepository implements BeerRepository {
                     int id = rs.getInt("idbeer");
                     String name = rs.getString("name");
                     double abv = rs.getDouble("abv");
-                    Optional<Integer> plato = Optional.ofNullable(rs.getObject("plato", Integer.class));
+                    int plato = rs.getInt("plato");
                     String style = rs.getString("style");
                     Quantities quantity = Quantities.valueOf(rs.getString("quantity"));
                     int stock = rs.getInt("stock");
@@ -107,7 +107,7 @@ public class BeerJBDCRepository implements BeerRepository {
 
         pscf.setReturnGeneratedKeys(true);
 
-        Integer platoValue = beer.getPlato().orElse(null);
+        Integer platoValue = beer.getPlato();
 
         PreparedStatementCreator psc = pscf.newPreparedStatementCreator(List.of(
                 beer.getName(),
@@ -144,7 +144,7 @@ public class BeerJBDCRepository implements BeerRepository {
         Beer beer  = new Beer(rs.getInt("idbeer"),
                 rs.getString("name"),
                 rs.getDouble("abv"),
-                Optional.ofNullable(rs.getInt("plato")),
+                rs.getInt("plato"),
                 rs.getString("style"),
                 Quantities.valueOf(rs.getString("quantity")),
                 rs.getInt("stock"),
@@ -159,7 +159,7 @@ public class BeerJBDCRepository implements BeerRepository {
     @Override
     public void updateBeer(Beer beer){
         try{
-            Integer platoValue = beer.getPlato().orElse(null);
+            Integer platoValue = beer.getPlato();
             jdbcTemplate.update("UPDATE BEER SET NAME = ?, ABV = ?, PLATO = ?, STYLE = ?, QUANTITY = ?, STOCK = ?, CONTAINER =?, BREWERY =?, PRICE =? WHERE IDBEER = ?",
                     beer.getName(), beer.getAbv(), platoValue, beer.getStyle(), beer.getQuantity().toString(), beer.getStock(), beer.getContainers().toString(), beer.getBrewery(), beer.getPrice(), beer.getIdBeer());
         } catch (DataAccessException e){

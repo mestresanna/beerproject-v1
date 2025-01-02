@@ -65,7 +65,7 @@
             <a href="/orders/detailOrder.html" th:href="@{/orders/detailOrder(idOrder=${order.getIdOrder()})}" class="text-decoration-none">
               <h4 th:text="${order.getIdOrder()}"></h4>
             </a></td>
-          <td th:text="${order.getBeers().keySet()}"></td>
+          <td th:text="${order.getBeersFromOrder()}"></td>
           <td th:text="${order.getComments()}"></td>
           <td th:text="${order.getDate()}"></td>
           <td th:text="${order.getTotal()}"></td>

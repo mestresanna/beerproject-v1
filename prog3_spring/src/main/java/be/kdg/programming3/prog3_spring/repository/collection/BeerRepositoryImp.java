@@ -24,7 +24,7 @@ public class BeerRepositoryImp implements BeerRepository {
     }
 
     @Override
-    public List<Beer> readAllBeers(){
+    public List<Beer> findAll(){
         logger.debug("Reading all beers");
         return beers;
     }

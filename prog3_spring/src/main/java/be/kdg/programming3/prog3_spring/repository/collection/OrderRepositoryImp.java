@@ -69,7 +69,9 @@ public class OrderRepositoryImp implements OrderRepository {
                 Beer key = entry.getKey();
                 if (key == beer) {
                     int quantity = entry.getValue();
-                    key.setStock(key.getStock() - quantity);
+                    int stock = key.getStock();
+                    key.setStock(stock - quantity);
+                    logger.debug("stock: {}, beer stock: {}", stock, key.getStock());
                 }
             }
         }
@@ -92,6 +94,10 @@ public class OrderRepositoryImp implements OrderRepository {
 
     @Override
     public void deleteBeer(int id, int beerId) {}
+
+    @Override
+    public void updateOrder(Order order) {
+    }
 
 
 }

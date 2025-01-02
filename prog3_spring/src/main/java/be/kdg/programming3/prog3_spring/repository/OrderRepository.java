@@ -11,7 +11,6 @@ public interface OrderRepository {
     Order save(Order order);
 
     void loadBeerOrder(Order order);
-
     void loadCustomer(Order order);
 
     Order findById(int orderId);
@@ -25,4 +24,5 @@ public interface OrderRepository {
     List<Order> findByCustomer(Customer customer);
     void delete(int id);
     void deleteBeer(int id, int beerId);
+    void updateOrder(Order order);
 }

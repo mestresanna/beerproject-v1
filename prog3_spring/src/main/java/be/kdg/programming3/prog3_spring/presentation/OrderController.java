@@ -88,6 +88,7 @@ public class OrderController {
         logger.info("View order: " + order);
         model.addAttribute("order", order);
 
+        model.addAttribute("orderBeer", order.getOrderBeers());
         return "/detail/detailOrder";
     }
 

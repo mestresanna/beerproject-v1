@@ -85,13 +85,15 @@ public class BeerController{
         createSessionParameters(session); // not un current use, we use Session Scope
 
         Beer beer = beerService.getBeerById(idBeer);
-        logger.info("View beer: " + beer);
-        model.addAttribute("beer", beer);
+        logger.debug("View beer: " + beer);
+        logger.info("View orders beer before: " + beer.getOrders());
+
 
         if (beer.getOrders() == null || beer.getOrders().isEmpty()) {
             List<Order> orders = orderService.findOrdersByBeer(beer);
-            beer.setOrders(orders);
+            model.addAttribute("orders", orders);
         }
+        model.addAttribute("beer", beer);
 
         logger.info("View orders beer: " + beer.getOrders());
         return "/detail/detailBeer";

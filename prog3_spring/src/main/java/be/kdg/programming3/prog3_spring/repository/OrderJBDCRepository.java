@@ -3,11 +3,13 @@ package be.kdg.programming3.prog3_spring.repository;
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.exceptions.DataBaseException;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -84,7 +86,7 @@ public class OrderJBDCRepository implements OrderRepository {
                 PreparedStatementCreator psc = pscf.newPreparedStatementCreator(List.of(key.getIdBeer(), order.getIdOrder(), entry.getValue()));
                 jdbcTemplate.update(psc);
                 loadBeer(key, order);
-                logger.info("Orders in beer with id {} , : {}", key.getIdBeer(), key.getOrders());
+                logger.debug("Orders in beer with id {} , : {}", key.getIdBeer(), key.getOrders());
             }
         }
     }
@@ -114,6 +116,7 @@ public class OrderJBDCRepository implements OrderRepository {
                     return null;
                 },
                 beer.getIdBeer());
+        logger.info("Orders in beer with id : {}", orders);
         return orders;
     }
 
@@ -182,6 +185,17 @@ public class OrderJBDCRepository implements OrderRepository {
         jdbcTemplate.update("DELETE FROM BEER_ORDER WHERE ORDERID = ? AND BEERID = ?", id, beerId);
 
         logger.debug("Deleting order with id: {}", id);
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        try{
+            jdbcTemplate.update("UPDATE ORDER SET DATE = ?, COMMENTS = ?, CUSTOMERID = ?, TOTAL = ? WHERE IDORDER = ?",
+                    order.getDate(), order.getComments(), order.getCustomer().getIdCustomer(), order.getTotal(), order.getIdOrder());
+        } catch (DataAccessException e){
+            logger.error(e.getMessage());
+            throw new DataBaseException("Error updating order: " + e);
+        }
     }
 
     public void resetStock(int beerId, int orderId){

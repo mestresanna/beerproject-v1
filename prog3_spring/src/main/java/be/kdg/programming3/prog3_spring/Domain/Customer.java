@@ -1,8 +1,11 @@
 package be.kdg.programming3.prog3_spring.Domain;
 
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
-
+@Entity
+@Table(name = "CUSTOMER")
 public class Customer {
     private String contact;
     private String companyName;
@@ -10,7 +13,10 @@ public class Customer {
     private String email;
     private String phone;
     private String imageUrl;
-    private ArrayList<Order> orders;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Order> orders;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idCustomer;
 
     public Customer(int idCustomer, String contact, String companyName, String address, String email, String phone, String imageUrl ) {
@@ -31,7 +37,10 @@ public class Customer {
         this.phone = phone;
         this.imageUrl = imageUrl;
     }
-    
+
+    public Customer() {
+    }
+
     public void setIdCustomer(int idCustomer) {
         this.idCustomer = idCustomer;
     }
@@ -87,7 +96,7 @@ public class Customer {
     public String getImageUrl() {
         return imageUrl;
     }
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 

@@ -1,28 +1,45 @@
 package be.kdg.programming3.prog3_spring.Domain;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import jakarta.persistence.*;
 
+import java.util.*;
+import java.util.stream.Collectors;
+
+@Entity
+@Table(name = "BEER")
 public class Beer {
-    //implements beer
+
     private String name;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idBeer;
     private double abv;
-    private Optional<Integer> plato;
+    private int plato;
     private String style;
+
+    @Enumerated(EnumType.STRING)
     private Quantities quantity;
     private int stock;
+
+    @Enumerated(EnumType.STRING)
     private Containers containers;
     private String brewery;
-    private ArrayList<Order> orders = new ArrayList<>();
+
+    @Transient
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "beer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderBeer> orderBeers = new HashSet<>();
+
     private double price;
+
     private String imageUrl;
 
     public Beer(String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl) {
         this.name = name;
         this.abv = abv;
-        this.plato = Optional.of(plato);
+        this.plato = plato;
         this.style = style;
         this.quantity = quantity;
         this.stock = stock;
@@ -33,7 +50,7 @@ public class Beer {
     }
 
 
-    public Beer(int id, String name, double abv, Optional<Integer> plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl) {
+    public Beer(int id, String name, double abv, int plato, String style, Quantities quantity, int stock, Containers containers, String brewery, double price, String imageUrl) {
         this.idBeer = id;
         this.name = name;
         this.abv = abv;
@@ -45,6 +62,19 @@ public class Beer {
         this.brewery=brewery;
         this.price = price;
         this.imageUrl = imageUrl;
+    }
+
+    public Beer() {
+
+    }
+
+
+    public Set<OrderBeer> getOrderBeers() {
+        return orderBeers;
+    }
+
+    public void setOrderBeers(Set<OrderBeer> orderBeers) {
+        this.orderBeers = orderBeers;
     }
 
     public double getPrice() {
@@ -59,7 +89,7 @@ public class Beer {
         this.abv = abv;
     }
 
-    public void setPlato(Optional<Integer> plato) {
+    public void setPlato(int plato) {
         this.plato = plato;
     }
 
@@ -104,7 +134,7 @@ public class Beer {
         return abv;
     }
 
-    public Optional<Integer> getPlato() {
+    public int getPlato() {
         return plato;
     }
 
@@ -128,7 +158,13 @@ public class Beer {
         return brewery;
     }
 
-    public ArrayList<Order> getOrders() {
+    public List<Order> getOrders() {
+        if (orderBeers != null) {
+            return orderBeers.stream()
+                    .map(OrderBeer::getOrder)
+                    .distinct()
+                    .collect(Collectors.toList());
+        }
         return orders;
     }
 
@@ -140,7 +176,7 @@ public class Beer {
     }
 
     public void setOrders(List<Order> orders) {
-        this.orders = (ArrayList<Order>) orders;
+        this.orders = orders;
     }
 
     public void setImageUrl(String imageUrl) {
@@ -156,6 +192,15 @@ public class Beer {
         return brewery + " - " + name + " - " + containers.getName() + " " + quantity.getSize();
     }
 
+    public void addOrderBeer(OrderBeer orderBeer) {
+        orderBeers.add(orderBeer);
+        orderBeer.setBeer(this);
+    }
+
+    public void removeOrderBeer(OrderBeer orderBeer) {
+        orderBeers.remove(orderBeer);
+        orderBeer.setBeer(null);
+    }
 
 
 }
