@@ -20,7 +20,6 @@
 
 <div class="container mt-4">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 justify-content-center">
-        <!-- Targeta individual -->
         <div class="col">
             <a th:href="@{/beers}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
@@ -33,7 +32,6 @@
             </a>
         </div>
 
-        <!-- Segona targeta -->
         <div class="col">
             <a th:href="@{/customer}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
@@ -46,7 +44,6 @@
             </a>
         </div>
 
-        <!-- Tercera targeta -->
         <div class="col">
             <a th:href="@{/orders}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
@@ -59,7 +56,6 @@
             </a>
         </div>
 
-        <!-- Quarta targeta -->
         <div class="col">
             <a th:href="@{/beers/add}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
@@ -72,7 +68,6 @@
             </a>
         </div>
 
-        <!-- Cinquena targeta -->
         <div class="col">
             <a th:href="@{/customer/add}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
@@ -85,7 +80,6 @@
             </a>
         </div>
 
-        <!-- Sisena targeta -->
         <div class="col">
             <a th:href="@{/orders/add}" class="text-decoration-none">
             <div class="card h-100 shadow-sm rounded text-center">
@@ -98,6 +92,13 @@
             </a>
         </div>
     </div>
+</div>
+<div class="container mt-5">
+    <h2>Export to JSON</h2>
+</div>
+<div class="position-relative text-center start-50 translate-middle-x mt-4">
+    <a class="btn btn-primary bg-black text-white text-decoration-none text-center" th:href="@{/export/beers.json}">Export Beers</a>
+    <a class="btn btn-primary bg-black text-white text-decoration-none text-center" th:href="@{/export/orders.json}">Export Orders</a>
 </div>
 
 

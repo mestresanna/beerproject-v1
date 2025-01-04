@@ -7,6 +7,7 @@ import be.kdg.programming3.prog3_spring.repository.collection.CustomerRepository
 import be.kdg.programming3.prog3_spring.repository.collection.OrderRepositoryImp;
 import be.kdg.programming3.prog3_spring.service.*;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 //@Configuration
 public class Config {
