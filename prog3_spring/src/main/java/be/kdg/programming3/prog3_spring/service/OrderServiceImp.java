@@ -3,7 +3,9 @@ package be.kdg.programming3.prog3_spring.service;
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.exceptions.OrderHasNoBeersException;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
+import be.kdg.programming3.prog3_spring.utils.OrderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+
+import static be.kdg.programming3.prog3_spring.utils.OrderUtils.checkOrderBeers;
 
 @Service
 @Profile({"collections", "jdbc", "jpa"})
@@ -70,6 +74,13 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public void deleteBeer(int order, int beer) {
-        orderRepository.deleteBeer(order, beer);
+         orderRepository.deleteBeer(order, beer);
+         Order orderToDelete = orderRepository.findById(order);
+        try {
+            OrderUtils.checkOrderBeers(orderToDelete.getBeersFromOrder(), order);
+        } catch (OrderHasNoBeersException e) {
+            logger.error("Order has no beers after deletion", e);
+            throw e; // Rethrow the exception
+        }
     }
 }

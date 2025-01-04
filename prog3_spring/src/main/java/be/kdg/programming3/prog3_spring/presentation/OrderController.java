@@ -86,7 +86,7 @@ public class OrderController {
         createSessionParameters(session); // not in current use, we use Session Scope
 
         Order order = orderService.getOrder(idOrder);
-        logger.info("View order: " + order);
+        logger.debug("View order: " + order);
         model.addAttribute("order", order);
 
         model.addAttribute("orderBeer", order.getOrderBeers());

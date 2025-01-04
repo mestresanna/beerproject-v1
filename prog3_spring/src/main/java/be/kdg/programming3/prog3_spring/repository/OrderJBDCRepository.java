@@ -4,8 +4,10 @@ import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.exceptions.DataBaseException;
+import be.kdg.programming3.prog3_spring.exceptions.OrderHasNoBeersException;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
+import be.kdg.programming3.prog3_spring.utils.OrderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -96,6 +98,12 @@ public class OrderJBDCRepository implements OrderRepository {
         jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE ORDERID = ? AND BEERID = ?",
                 (ResultSet beerRs, int beerRowNum) -> {
                     int quantity = beer.getStock() - beerRs.getInt("QUANTITY");
+                    try {
+                        OrderUtils.checkQuantityBeer(beerRs.getInt("QUANTITY"), quantity);
+                    } catch (OrderHasNoBeersException e) {
+                        logger.error("Beer has no quantity", e);
+                        throw e; // Rethrow the exception
+                    }
                     beer.setStock(quantity);
                     findByBeer(beer);
                     beerService.updateBeer(beer);

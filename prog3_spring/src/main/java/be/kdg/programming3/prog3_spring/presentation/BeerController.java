@@ -92,7 +92,7 @@ public class BeerController{
 
         Beer beer = beerService.getBeerById(idBeer);
         logger.debug("View beer: " + beer);
-        logger.info("View orders beer before: " + beer.getOrders());
+        logger.debug("View orders beer before: " + beer.getOrders());
 
 
         if (beer.getOrders() == null || beer.getOrders().isEmpty()) {
@@ -101,7 +101,7 @@ public class BeerController{
         }
         model.addAttribute("beer", beer);
 
-        logger.info("View orders beer: " + beer.getOrders());
+        logger.debug("View orders beer: " + beer.getOrders());
         return "/detail/detailBeer";
     }
 

@@ -3,7 +3,9 @@ package be.kdg.programming3.prog3_spring.repository.collection;
 import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
+import be.kdg.programming3.prog3_spring.exceptions.OrderHasNoBeersException;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
+import be.kdg.programming3.prog3_spring.utils.OrderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -70,7 +72,15 @@ public class OrderRepositoryImp implements OrderRepository {
                 if (key == beer) {
                     int quantity = entry.getValue();
                     int stock = key.getStock();
-                    key.setStock(stock - quantity);
+                    try {
+                        OrderUtils.checkQuantityBeer(quantity, (stock - quantity));
+                    } catch (OrderHasNoBeersException e) {
+                        logger.error("Beer has no quantity", e);
+                        throw e; // Rethrow the exception
+                    }
+                    if (quantity > 0 && stock > quantity) {
+                        key.setStock(stock - quantity);
+                    }
                     logger.debug("stock: {}, beer stock: {}", stock, key.getStock());
                 }
             }

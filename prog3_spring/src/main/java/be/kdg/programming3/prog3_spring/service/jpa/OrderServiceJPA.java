@@ -4,9 +4,11 @@ import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.Domain.OrderBeer;
+import be.kdg.programming3.prog3_spring.exceptions.OrderHasNoBeersException;
 import be.kdg.programming3.prog3_spring.repository.jpa.BeerRepositoryJPA;
 import be.kdg.programming3.prog3_spring.repository.jpa.OrderRepositoryJPA;
 import be.kdg.programming3.prog3_spring.service.OrderService;
+import be.kdg.programming3.prog3_spring.utils.OrderUtils;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Profile("jpa_rep")
@@ -76,6 +79,14 @@ public class OrderServiceJPA implements OrderService {
     @Transactional
     @Override
     public void delete(int id){
+        //Reset beer stock before deleting the order
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found: " + id));
+        Set<OrderBeer> orderBeerToRemove = order.getOrderBeers();
+        if (orderBeerToRemove != null) {
+            orderBeerToRemove.forEach(ob -> resetBeerStock(ob.getBeer().getIdBeer(), ob.getQuantity()));
+        }
+
         orderRepository.deleteById(id);
     }
 
@@ -105,8 +116,17 @@ public class OrderServiceJPA implements OrderService {
             order.removeOrderBeer(orderBeerToRemove);
             resetBeerStock(beerId, orderBeerToRemove.getQuantity());
             resetTotalPrice(beerId, orderBeerToRemove.getQuantity(), order);
-            orderRepository.save(order);
         }
+
+        logger.debug("Order deleted has this beers: " + order.getBeersFromOrder());
+        //Custom exception
+        try {
+            OrderUtils.checkOrderBeers(order.getBeersFromOrder(), orderId);
+        } catch (OrderHasNoBeersException e) {
+            logger.error("Order has no beers after deletion", e);
+            throw e; // Rethrow the exception
+        }
+        orderRepository.save(order);
     }
 
     public void setBeerStock(Beer beer, int quantity) {
@@ -114,9 +134,16 @@ public class OrderServiceJPA implements OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("Beer not found: " + beer.getIdBeer()));
 
         int newStock = managedBeer.getStock() - quantity;
-        if (newStock < 0) {
+        /*if (newStock < 0) {
             throw new IllegalStateException("Not enough stock for beer: " + managedBeer.getName());
+        }*/
+        try {
+            OrderUtils.checkQuantityBeer(quantity, newStock);
+        } catch (OrderHasNoBeersException e) {
+            logger.error("Beer has no quantity", e);
+            throw e; // Rethrow the exception
         }
+
         managedBeer.setStock(newStock);
         logger.info("Beer stock updated: " + managedBeer.getStock());
         beerRepository.save(managedBeer);

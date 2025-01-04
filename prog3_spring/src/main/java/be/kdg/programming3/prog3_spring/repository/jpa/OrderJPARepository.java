@@ -4,9 +4,11 @@ import be.kdg.programming3.prog3_spring.Domain.Beer;
 import be.kdg.programming3.prog3_spring.Domain.Customer;
 import be.kdg.programming3.prog3_spring.Domain.Order;
 import be.kdg.programming3.prog3_spring.Domain.OrderBeer;
+import be.kdg.programming3.prog3_spring.exceptions.OrderHasNoBeersException;
 import be.kdg.programming3.prog3_spring.repository.OrderRepository;
 import be.kdg.programming3.prog3_spring.service.BeerService;
 import be.kdg.programming3.prog3_spring.service.CustomerService;
+import be.kdg.programming3.prog3_spring.utils.OrderUtils;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.slf4j.Logger;
@@ -73,6 +75,12 @@ public class OrderJPARepository implements OrderRepository {
         orderBeers.forEach(orderBeer -> {
             Beer beer = orderBeer.getBeer();
             int updatedStock = beer.getStock() - orderBeer.getQuantity();
+            try {
+                OrderUtils.checkQuantityBeer(orderBeer.getQuantity(), updatedStock);
+            } catch (OrderHasNoBeersException e) {
+                logger.error("Beer has no quantity", e);
+                throw e; // Rethrow the exception
+            }
             beer.setStock(updatedStock);
             beerService.updateBeer(beer);
             logger.debug("Loaded beer {} for order {}", beer.getName(), order.getIdOrder());
@@ -85,6 +93,12 @@ public class OrderJPARepository implements OrderRepository {
         em.createQuery("SELECT b FROM OrderBeer b WHERE order = :order AND beer = :beer", OrderBeer.class)
                 .getResultStream().forEach(b -> {
                     int quantity = beer.getStock() - b.getQuantity();
+                    try {
+                        OrderUtils.checkQuantityBeer(b.getQuantity(), quantity);
+                    } catch (OrderHasNoBeersException e) {
+                        logger.error("Beer has no quantity", e);
+                        throw e; // Rethrow the exception
+                    }
                     beer.setStock(quantity);
                     findByBeer(beer);
                     beerService.updateBeer(beer);

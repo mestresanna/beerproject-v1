@@ -1,6 +1,4 @@
-
 DROP table if exists Beer_Order CASCADE;
-
 drop table if exists Orders CASCADE;
 drop table if exists Customer CASCADE;
 drop table if exists Beer CASCADE;

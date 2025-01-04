@@ -92,7 +92,6 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-        //customer.setOrders(this);
     }
 
     public void setTotal(double total) {
@@ -100,7 +99,7 @@ public class Order {
     }
 
     public void setTotalPrice() {
-        setTotal(0);
+        try{setTotal(0);
         double price = 0;
         if (beers!=null && beers.size()>0) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
@@ -109,7 +108,9 @@ public class Order {
                 price += (key.getPrice() * value);
             }
         }
-        setTotal(price);
+        setTotal(price);} catch (Exception e) {
+            throw new RuntimeException("Beer is empty",e);
+        }
         //call an error when beers is empty
     }
 
@@ -158,7 +159,6 @@ public class Order {
                 Beer beer = orderBeer.getBeer();
                 int quantity = orderBeer.getQuantity();
                 beersOrder.put(beer, quantity);
-                //beer.setStock(beer.getStock() - quantity);
             });
             return beersOrder;
         }
@@ -197,7 +197,6 @@ public class Order {
         OrderBeer orderBeer = new OrderBeer(this, beer, quantity);
         addOrderBeer(orderBeer);
         beer.addOrderBeer(orderBeer);
-        //beer.setStock(beer.getStock() - quantity);
     }
 
     public void removeBeer(Beer beer) {
