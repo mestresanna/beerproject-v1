@@ -23,10 +23,13 @@ import java.util.Map;
 @Controller
 @RequestMapping("/sessions")
 public class SessionHistoryController {
-    private final Logger logger= LoggerFactory.getLogger(SessionHistoryController.class);
+    private Logger logger= LoggerFactory.getLogger(SessionHistoryController.class);
 
-    @Autowired
     private SessionHistory sessionHistory;
+
+    public SessionHistoryController(SessionHistory sessionHistory) {
+        this.sessionHistory = sessionHistory;
+    }
 
     @GetMapping
      public String getSessionHistory(Model model, HttpSession session) {
