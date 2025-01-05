@@ -33,8 +33,8 @@ public class SessionHistoryController {
 
     @GetMapping
      public String getSessionHistory(Model model, HttpSession session) {
-        /* Using Session Parameters
-        Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
+        // Using Session Parameters
+        /* Map<String, List<LocalDateTime>> sessionMap = (Map<String, List<LocalDateTime>>) session.getAttribute("sessionMap");
         if (sessionMap == null) {
             logger.debug("No history session found, creating an empty history session");
             sessionMap = new HashMap<>();
@@ -45,7 +45,9 @@ public class SessionHistoryController {
         logger.info("sessionMap in getSessionHistory: " + sessionMap);
         model.addAttribute("sessionMap", sessionMap);*/
 
-        model.addAttribute("sessionMap", sessionHistory.getPageVisits());
+
+        model.addAttribute("sessionMap", sessionHistory.getPageVisits()); //comment this line if using Session Parameters
+
         String ipAddr = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
                 .getRequest().getRemoteAddr();
         model.addAttribute("ipAddr", ipAddr);

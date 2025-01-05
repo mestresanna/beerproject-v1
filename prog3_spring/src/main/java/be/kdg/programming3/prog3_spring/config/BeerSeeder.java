@@ -26,7 +26,6 @@ public class BeerSeeder implements CommandLineRunner {
 
     public void run(String... args) throws Exception {
         Random random = new Random();
-        //String name, double abv, String style, plato, Quantities quantity, int stock, Containers containers, String brewery
         Stream.generate(()->new Beer("beer"+ random.nextInt(100), Math.round(random.nextDouble(20) * 100.0) / 100.0,random.nextInt(100), "IPA",
                         Quantities.values()[random.nextInt(Quantities.values().length)], random.nextInt(300),
                 Containers.values()[random.nextInt(Containers.values().length)], "Omnipollo"+random.nextInt(100), Math.round(random.nextDouble(15) * 100.0) / 100.0, "/images/beers.png"))

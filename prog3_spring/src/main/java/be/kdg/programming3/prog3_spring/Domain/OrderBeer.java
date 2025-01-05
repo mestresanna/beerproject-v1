@@ -41,6 +41,7 @@ public class OrderBeer {
     }
 
     public void addBeer(Beer beer) {
+        //it allows to reset de stock
         Set<OrderBeer> orderBeers = new HashSet<>();
         if (beer.getOrderBeers() != null) {
             orderBeers.addAll(beer.getOrderBeers());

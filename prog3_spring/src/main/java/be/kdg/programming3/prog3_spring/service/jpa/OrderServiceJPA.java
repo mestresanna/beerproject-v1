@@ -134,9 +134,6 @@ public class OrderServiceJPA implements OrderService {
                 .orElseThrow(() -> new IllegalArgumentException("Beer not found: " + beer.getIdBeer()));
 
         int newStock = managedBeer.getStock() - quantity;
-        /*if (newStock < 0) {
-            throw new IllegalStateException("Not enough stock for beer: " + managedBeer.getName());
-        }*/
         try {
             OrderUtils.checkQuantityBeer(quantity, newStock);
         } catch (OrderHasNoBeersException e) {

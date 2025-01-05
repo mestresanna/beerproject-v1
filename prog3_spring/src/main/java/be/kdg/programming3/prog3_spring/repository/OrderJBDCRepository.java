@@ -68,6 +68,7 @@ public class OrderJBDCRepository implements OrderRepository {
 
     @Override
     public void loadCustomer(Order order){
+        //Set the order into the Customer List<Order>
         logger.debug("Setting order to customer: {}", order);
         Customer customer = order.getCustomer();
         List<Order> orders = jdbcTemplate.query("SELECT * FROM ORDERS WHERE CUSTOMERID = ? ", this::mapRow, customer.getIdCustomer());
@@ -78,6 +79,7 @@ public class OrderJBDCRepository implements OrderRepository {
 
     @Override
     public void loadBeerOrder(Order order){
+        //Insert in the hasMap the beer and each quantity
         HashMap<Beer, Integer> beers = order.getBeers();
         if (beers!=null && !beers.isEmpty()) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
@@ -87,6 +89,7 @@ public class OrderJBDCRepository implements OrderRepository {
                         Types.INTEGER, Types.INTEGER, Types.INTEGER);
                 PreparedStatementCreator psc = pscf.newPreparedStatementCreator(List.of(key.getIdBeer(), order.getIdOrder(), entry.getValue()));
                 jdbcTemplate.update(psc);
+                //call loadBeer to set the new Stock of the beer
                 loadBeer(key, order);
                 logger.debug("Orders in beer with id {} , : {}", key.getIdBeer(), key.getOrders());
             }
@@ -206,6 +209,7 @@ public class OrderJBDCRepository implements OrderRepository {
         }
     }
 
+    @Transactional
     public void resetStock(int beerId, int orderId){
         jdbcTemplate.query("SELECT * FROM BEER_ORDER WHERE ORDERID = ? AND BEERID = ?",
                 (ResultSet beerRs, int beerRowNum) -> {

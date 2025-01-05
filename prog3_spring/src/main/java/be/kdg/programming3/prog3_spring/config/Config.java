@@ -9,6 +9,7 @@ import be.kdg.programming3.prog3_spring.service.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+//Commented because the beans are done auto
 //@Configuration
 public class Config {
     @Bean

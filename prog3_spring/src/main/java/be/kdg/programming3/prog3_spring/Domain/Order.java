@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "ORDERS")
@@ -115,6 +114,7 @@ public class Order {
     }
 
     public int getStockToBeer(int beer){
+        //It changes depending on the profile
         AtomicInteger value= new AtomicInteger();
         if (beers!=null && beers.size()>0) {
             for (Map.Entry<Beer, Integer> entry : beers.entrySet()) {
@@ -153,6 +153,7 @@ public class Order {
     }
 
     public HashMap<Beer, Integer> getBeers() {
+        //This allows us to use just one method for all profiles
         if (orderBeers!=null) {
             HashMap<Beer, Integer> beersOrder = new HashMap<>(orderBeers.size());
             orderBeers.forEach(orderBeer -> {

@@ -159,6 +159,7 @@ public class Beer {
     }
 
     public List<Order> getOrders() {
+        //This allows us to use just one method for all profiles
         if (orderBeers != null) {
             return orderBeers.stream()
                     .map(OrderBeer::getOrder)
